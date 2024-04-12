@@ -19,7 +19,7 @@ namespace ChinookHTMX.Pages.Genres
             _context = context;
         }
 
-        public IList<Genre> Genre { get;set; } = default!;
+        public IList<Genre> Genre { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

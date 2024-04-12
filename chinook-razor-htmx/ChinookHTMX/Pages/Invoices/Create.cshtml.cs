@@ -21,12 +21,11 @@ namespace ChinookHTMX.Pages.Invoices
 
         public IActionResult OnGet()
         {
-        ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
             return Page();
         }
 
-        [BindProperty]
-        public Invoice Invoice { get; set; } = default!;
+        [BindProperty] public Invoice Invoice { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

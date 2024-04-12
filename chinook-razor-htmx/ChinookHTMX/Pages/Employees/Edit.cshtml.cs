@@ -20,8 +20,7 @@ namespace ChinookHTMX.Pages.Employees
             _context = context;
         }
 
-        [BindProperty]
-        public Employee Employee { get; set; } = default!;
+        [BindProperty] public Employee Employee { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,13 +29,14 @@ namespace ChinookHTMX.Pages.Employees
                 return NotFound();
             }
 
-            var employee =  await _context.Employees.FirstOrDefaultAsync(m => m.Id == id);
+            var employee = await _context.Employees.FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
                 return NotFound();
             }
+
             Employee = employee;
-           ViewData["ReportsTo"] = new SelectList(_context.Employees, "Id", "Id");
+            ViewData["ReportsTo"] = new SelectList(_context.Employees, "Id", "Id");
             return Page();
         }
 

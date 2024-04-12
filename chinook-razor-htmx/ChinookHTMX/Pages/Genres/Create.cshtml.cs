@@ -24,8 +24,7 @@ namespace ChinookHTMX.Pages.Genres
             return Page();
         }
 
-        [BindProperty]
-        public Genre Genre { get; set; } = default!;
+        [BindProperty] public Genre Genre { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

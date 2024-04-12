@@ -20,8 +20,7 @@ namespace ChinookHTMX.Pages.Artists
             _context = context;
         }
 
-        [BindProperty]
-        public Artist Artist { get; set; } = default!;
+        [BindProperty] public Artist Artist { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,11 +29,12 @@ namespace ChinookHTMX.Pages.Artists
                 return NotFound();
             }
 
-            var artist =  await _context.Artists.FirstOrDefaultAsync(m => m.Id == id);
+            var artist = await _context.Artists.FirstOrDefaultAsync(m => m.Id == id);
             if (artist == null)
             {
                 return NotFound();
             }
+
             Artist = artist;
             return Page();
         }

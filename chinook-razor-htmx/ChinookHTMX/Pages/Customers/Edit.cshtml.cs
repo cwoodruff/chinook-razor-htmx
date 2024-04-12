@@ -20,8 +20,7 @@ namespace ChinookHTMX.Pages.Customers
             _context = context;
         }
 
-        [BindProperty]
-        public Customer Customer { get; set; } = default!;
+        [BindProperty] public Customer Customer { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,13 +29,14 @@ namespace ChinookHTMX.Pages.Customers
                 return NotFound();
             }
 
-            var customer =  await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
+            var customer = await _context.Customers.FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
             {
                 return NotFound();
             }
+
             Customer = customer;
-           ViewData["SupportRepId"] = new SelectList(_context.Employees, "Id", "Id");
+            ViewData["SupportRepId"] = new SelectList(_context.Employees, "Id", "Id");
             return Page();
         }
 

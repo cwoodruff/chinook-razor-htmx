@@ -19,8 +19,7 @@ namespace ChinookHTMX.Pages.InvoiceLines
             _context = context;
         }
 
-        [BindProperty]
-        public InvoiceLine InvoiceLine { get; set; } = default!;
+        [BindProperty] public InvoiceLine InvoiceLine { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +38,7 @@ namespace ChinookHTMX.Pages.InvoiceLines
             {
                 InvoiceLine = invoiceline;
             }
+
             return Page();
         }
 

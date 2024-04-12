@@ -8,15 +8,15 @@
 <h1>Edit</h1>
 
 <h4>Track</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Track.Id" />
+            <input type="hidden" asp-for="Track.Id"/>
             <div class="form-group">
                 <label asp-for="Track.Name" class="control-label"></label>
-                <input asp-for="Track.Name" class="form-control" />
+                <input asp-for="Track.Name" class="form-control"/>
                 <span asp-validation-for="Track.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -36,26 +36,26 @@
             </div>
             <div class="form-group">
                 <label asp-for="Track.Composer" class="control-label"></label>
-                <input asp-for="Track.Composer" class="form-control" />
+                <input asp-for="Track.Composer" class="form-control"/>
                 <span asp-validation-for="Track.Composer" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Track.Milliseconds" class="control-label"></label>
-                <input asp-for="Track.Milliseconds" class="form-control" />
+                <input asp-for="Track.Milliseconds" class="form-control"/>
                 <span asp-validation-for="Track.Milliseconds" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Track.Bytes" class="control-label"></label>
-                <input asp-for="Track.Bytes" class="form-control" />
+                <input asp-for="Track.Bytes" class="form-control"/>
                 <span asp-validation-for="Track.Bytes" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Track.UnitPrice" class="control-label"></label>
-                <input asp-for="Track.UnitPrice" class="form-control" />
+                <input asp-for="Track.UnitPrice" class="form-control"/>
                 <span asp-validation-for="Track.UnitPrice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </form>
     </div>
@@ -64,4 +64,3 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
-

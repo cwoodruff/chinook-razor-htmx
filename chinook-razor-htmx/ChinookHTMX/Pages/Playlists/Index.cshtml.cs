@@ -19,7 +19,7 @@ namespace ChinookHTMX.Pages.Playlists
             _context = context;
         }
 
-        public IList<Playlist> Playlist { get;set; } = default!;
+        public IList<Playlist> Playlist { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

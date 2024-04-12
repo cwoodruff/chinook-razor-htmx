@@ -37,6 +37,7 @@ namespace ChinookHTMX.Pages.Invoices
             {
                 Invoice = invoice;
             }
+
             return Page();
         }
     }

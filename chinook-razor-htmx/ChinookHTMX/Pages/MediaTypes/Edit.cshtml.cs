@@ -20,8 +20,7 @@ namespace ChinookHTMX.Pages.MediaTypes
             _context = context;
         }
 
-        [BindProperty]
-        public MediaType MediaType { get; set; } = default!;
+        [BindProperty] public MediaType MediaType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,11 +29,12 @@ namespace ChinookHTMX.Pages.MediaTypes
                 return NotFound();
             }
 
-            var mediatype =  await _context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
+            var mediatype = await _context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
             if (mediatype == null)
             {
                 return NotFound();
             }
+
             MediaType = mediatype;
             return Page();
         }

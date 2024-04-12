@@ -37,6 +37,7 @@ namespace ChinookHTMX.Pages.InvoiceLines
             {
                 InvoiceLine = invoiceline;
             }
+
             return Page();
         }
     }

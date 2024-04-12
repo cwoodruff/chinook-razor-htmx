@@ -8,15 +8,15 @@
 <h1>Edit</h1>
 
 <h4>Album</h4>
-<hr />
+<hr/>
 <div class="row">
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Album.Id" />
+            <input type="hidden" asp-for="Album.Id"/>
             <div class="form-group">
                 <label asp-for="Album.Title" class="control-label"></label>
-                <input asp-for="Album.Title" class="form-control" />
+                <input asp-for="Album.Title" class="form-control"/>
                 <span asp-validation-for="Album.Title" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -25,7 +25,7 @@
                 <span asp-validation-for="Album.ArtistId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary"/>
             </div>
         </form>
     </div>
@@ -34,4 +34,3 @@
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
-

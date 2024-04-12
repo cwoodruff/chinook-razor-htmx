@@ -5,74 +5,102 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<!-- Main Content -->
+<div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Track[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Track[0].Composer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Track[0].Milliseconds)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Track[0].Bytes)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Track[0].UnitPrice)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Track[0].Album)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Track[0].Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Track[0].MediaType)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Track) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Composer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Milliseconds)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Bytes)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitPrice)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Album.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MediaType.Id)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Tracks</h1>
+        </div>
+
+        <p>
+            <a asp-page="Create" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-flag"></i>
+                </span>
+                <span class="text">Create New Track</span>
+            </a>
+        </p>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Albums</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Track[0].Name)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Track[0].Composer)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Track[0].Milliseconds)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Track[0].Bytes)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Track[0].UnitPrice)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Track[0].Album)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Track[0].Genre)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Track[0].MediaType)
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.Track)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Composer)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Milliseconds)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Bytes)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Album.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Genre.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MediaType.Id)
+                                </td>
+                                <td>
+                                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->

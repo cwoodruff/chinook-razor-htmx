@@ -19,7 +19,7 @@ namespace ChinookHTMX.Pages.Employees
             _context = context;
         }
 
-        public IList<Employee> Employee { get;set; } = default!;
+        public IList<Employee> Employee { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

@@ -19,7 +19,7 @@ namespace ChinookHTMX.Pages.Tracks
             _context = context;
         }
 
-        public IList<Track> Track { get;set; } = default!;
+        public IList<Track> Track { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

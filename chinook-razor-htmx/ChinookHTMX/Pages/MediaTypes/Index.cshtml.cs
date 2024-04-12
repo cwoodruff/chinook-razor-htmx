@@ -19,7 +19,7 @@ namespace ChinookHTMX.Pages.MediaTypes
             _context = context;
         }
 
-        public IList<MediaType> MediaType { get;set; } = default!;
+        public IList<MediaType> MediaType { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

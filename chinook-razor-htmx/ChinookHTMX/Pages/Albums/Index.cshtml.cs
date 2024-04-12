@@ -19,7 +19,7 @@ namespace ChinookHTMX.Pages.Albums
             _context = context;
         }
 
-        public IList<Album> Album { get;set; } = default!;
+        public IList<Album> Album { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

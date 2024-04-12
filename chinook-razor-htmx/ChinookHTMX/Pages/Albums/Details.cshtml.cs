@@ -37,6 +37,7 @@ namespace ChinookHTMX.Pages.Albums
             {
                 Album = album;
             }
+
             return Page();
         }
     }

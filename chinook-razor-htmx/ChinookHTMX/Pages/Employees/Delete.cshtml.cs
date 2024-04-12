@@ -19,8 +19,7 @@ namespace ChinookHTMX.Pages.Employees
             _context = context;
         }
 
-        [BindProperty]
-        public Employee Employee { get; set; } = default!;
+        [BindProperty] public Employee Employee { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +38,7 @@ namespace ChinookHTMX.Pages.Employees
             {
                 Employee = employee;
             }
+
             return Page();
         }
 

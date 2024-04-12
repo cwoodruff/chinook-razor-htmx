@@ -37,6 +37,7 @@ namespace ChinookHTMX.Pages.Tracks
             {
                 Track = track;
             }
+
             return Page();
         }
     }

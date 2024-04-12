@@ -19,7 +19,7 @@ namespace ChinookHTMX.Pages.Artists
             _context = context;
         }
 
-        public IList<Artist> Artist { get;set; } = default!;
+        public IList<Artist> Artist { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

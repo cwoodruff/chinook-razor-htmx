@@ -20,8 +20,7 @@ namespace ChinookHTMX.Pages.InvoiceLines
             _context = context;
         }
 
-        [BindProperty]
-        public InvoiceLine InvoiceLine { get; set; } = default!;
+        [BindProperty] public InvoiceLine InvoiceLine { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,14 +29,15 @@ namespace ChinookHTMX.Pages.InvoiceLines
                 return NotFound();
             }
 
-            var invoiceline =  await _context.InvoiceLines.FirstOrDefaultAsync(m => m.Id == id);
+            var invoiceline = await _context.InvoiceLines.FirstOrDefaultAsync(m => m.Id == id);
             if (invoiceline == null)
             {
                 return NotFound();
             }
+
             InvoiceLine = invoiceline;
-           ViewData["InvoiceId"] = new SelectList(_context.Invoices, "Id", "Id");
-           ViewData["TrackId"] = new SelectList(_context.Tracks, "Id", "Id");
+            ViewData["InvoiceId"] = new SelectList(_context.Invoices, "Id", "Id");
+            ViewData["TrackId"] = new SelectList(_context.Tracks, "Id", "Id");
             return Page();
         }
 

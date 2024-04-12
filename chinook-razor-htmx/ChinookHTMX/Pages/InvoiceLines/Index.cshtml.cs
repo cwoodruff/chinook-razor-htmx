@@ -19,7 +19,7 @@ namespace ChinookHTMX.Pages.InvoiceLines
             _context = context;
         }
 
-        public IList<InvoiceLine> InvoiceLine { get;set; } = default!;
+        public IList<InvoiceLine> InvoiceLine { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

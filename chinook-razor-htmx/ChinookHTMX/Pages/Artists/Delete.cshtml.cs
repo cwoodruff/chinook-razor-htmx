@@ -19,8 +19,7 @@ namespace ChinookHTMX.Pages.Artists
             _context = context;
         }
 
-        [BindProperty]
-        public Artist Artist { get; set; } = default!;
+        [BindProperty] public Artist Artist { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +38,7 @@ namespace ChinookHTMX.Pages.Artists
             {
                 Artist = artist;
             }
+
             return Page();
         }
 

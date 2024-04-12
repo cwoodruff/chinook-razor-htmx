@@ -21,12 +21,11 @@ namespace ChinookHTMX.Pages.Albums
 
         public IActionResult OnGet()
         {
-        ViewData["ArtistId"] = new SelectList(_context.Artists, "Id", "Id");
+            ViewData["ArtistId"] = new SelectList(_context.Artists, "Id", "Id");
             return Page();
         }
 
-        [BindProperty]
-        public Album Album { get; set; } = default!;
+        [BindProperty] public Album Album { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

@@ -37,6 +37,7 @@ namespace ChinookHTMX.Pages.Artists
             {
                 Artist = artist;
             }
+
             return Page();
         }
     }

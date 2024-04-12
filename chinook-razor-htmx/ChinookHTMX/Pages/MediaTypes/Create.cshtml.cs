@@ -24,8 +24,7 @@ namespace ChinookHTMX.Pages.MediaTypes
             return Page();
         }
 
-        [BindProperty]
-        public MediaType MediaType { get; set; } = default!;
+        [BindProperty] public MediaType MediaType { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

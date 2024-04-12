@@ -37,6 +37,7 @@ namespace ChinookHTMX.Pages.Customers
             {
                 Customer = customer;
             }
+
             return Page();
         }
     }

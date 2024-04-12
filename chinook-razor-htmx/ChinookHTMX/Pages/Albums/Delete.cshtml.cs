@@ -19,8 +19,7 @@ namespace ChinookHTMX.Pages.Albums
             _context = context;
         }
 
-        [BindProperty]
-        public Album Album { get; set; } = default!;
+        [BindProperty] public Album Album { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +38,7 @@ namespace ChinookHTMX.Pages.Albums
             {
                 Album = album;
             }
+
             return Page();
         }
 

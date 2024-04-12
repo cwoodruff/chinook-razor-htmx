@@ -20,8 +20,7 @@ namespace ChinookHTMX.Pages.Tracks
             _context = context;
         }
 
-        [BindProperty]
-        public Track Track { get; set; } = default!;
+        [BindProperty] public Track Track { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,15 +29,16 @@ namespace ChinookHTMX.Pages.Tracks
                 return NotFound();
             }
 
-            var track =  await _context.Tracks.FirstOrDefaultAsync(m => m.Id == id);
+            var track = await _context.Tracks.FirstOrDefaultAsync(m => m.Id == id);
             if (track == null)
             {
                 return NotFound();
             }
+
             Track = track;
-           ViewData["AlbumId"] = new SelectList(_context.Albums, "Id", "Id");
-           ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id");
-           ViewData["MediaTypeId"] = new SelectList(_context.MediaTypes, "Id", "Id");
+            ViewData["AlbumId"] = new SelectList(_context.Albums, "Id", "Id");
+            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id");
+            ViewData["MediaTypeId"] = new SelectList(_context.MediaTypes, "Id", "Id");
             return Page();
         }
 

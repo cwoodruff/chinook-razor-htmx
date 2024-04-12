@@ -20,8 +20,7 @@ namespace ChinookHTMX.Pages.Albums
             _context = context;
         }
 
-        [BindProperty]
-        public Album Album { get; set; } = default!;
+        [BindProperty] public Album Album { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,13 +29,14 @@ namespace ChinookHTMX.Pages.Albums
                 return NotFound();
             }
 
-            var album =  await _context.Albums.FirstOrDefaultAsync(m => m.Id == id);
+            var album = await _context.Albums.FirstOrDefaultAsync(m => m.Id == id);
             if (album == null)
             {
                 return NotFound();
             }
+
             Album = album;
-           ViewData["ArtistId"] = new SelectList(_context.Artists, "Id", "Id");
+            ViewData["ArtistId"] = new SelectList(_context.Artists, "Id", "Id");
             return Page();
         }
 

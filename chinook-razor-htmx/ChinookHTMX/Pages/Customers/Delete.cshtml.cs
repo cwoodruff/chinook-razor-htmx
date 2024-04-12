@@ -19,8 +19,7 @@ namespace ChinookHTMX.Pages.Customers
             _context = context;
         }
 
-        [BindProperty]
-        public Customer Customer { get; set; } = default!;
+        [BindProperty] public Customer Customer { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +38,7 @@ namespace ChinookHTMX.Pages.Customers
             {
                 Customer = customer;
             }
+
             return Page();
         }
 

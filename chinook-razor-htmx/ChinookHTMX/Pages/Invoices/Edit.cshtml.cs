@@ -20,8 +20,7 @@ namespace ChinookHTMX.Pages.Invoices
             _context = context;
         }
 
-        [BindProperty]
-        public Invoice Invoice { get; set; } = default!;
+        [BindProperty] public Invoice Invoice { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,13 +29,14 @@ namespace ChinookHTMX.Pages.Invoices
                 return NotFound();
             }
 
-            var invoice =  await _context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
+            var invoice = await _context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
             if (invoice == null)
             {
                 return NotFound();
             }
+
             Invoice = invoice;
-           ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
             return Page();
         }
 

@@ -21,13 +21,12 @@ namespace ChinookHTMX.Pages.InvoiceLines
 
         public IActionResult OnGet()
         {
-        ViewData["InvoiceId"] = new SelectList(_context.Invoices, "Id", "Id");
-        ViewData["TrackId"] = new SelectList(_context.Tracks, "Id", "Id");
+            ViewData["InvoiceId"] = new SelectList(_context.Invoices, "Id", "Id");
+            ViewData["TrackId"] = new SelectList(_context.Tracks, "Id", "Id");
             return Page();
         }
 
-        [BindProperty]
-        public InvoiceLine InvoiceLine { get; set; } = default!;
+        [BindProperty] public InvoiceLine InvoiceLine { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

@@ -5,74 +5,102 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<!-- Main Content -->
+<div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].InvoiceDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].BillingAddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].BillingCity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].BillingState)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].BillingCountry)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].BillingPostalCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].Total)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Invoice[0].Customer)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Invoice) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.InvoiceDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BillingAddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BillingCity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BillingState)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BillingCountry)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BillingPostalCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Id)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Invoices</h1>
+        </div>
+
+        <p>
+            <a asp-page="Create" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-flag"></i>
+                </span>
+                <span class="text">Create New Invoice</span>
+            </a>
+        </p>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Albums</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Invoice[0].InvoiceDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Invoice[0].BillingAddress)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Invoice[0].BillingCity)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Invoice[0].BillingState)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Invoice[0].BillingCountry)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Invoice[0].BillingPostalCode)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Invoice[0].Total)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Invoice[0].Customer)
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.Invoice)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.InvoiceDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BillingAddress)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BillingCity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BillingState)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BillingCountry)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BillingPostalCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Total)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Customer.Id)
+                                </td>
+                                <td>
+                                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->

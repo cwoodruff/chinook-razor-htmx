@@ -7,10 +7,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>@ViewData["Title"] - ChinookHTMX</title>
+    <link rel="stylesheet" href="css/sb-admin-2.min.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/lib/simple-sidebar/css/styles.css" asp-append-version="true"/>
-    
+    <link rel="stylesheet" href="~/lib/datatables/dataTables.bootstrap4.min.css" asp-append-version="true"/>
+
     <title>Chinook HTMX</title>
 
     <!-- Custom fonts for this template-->
@@ -22,21 +24,23 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 </head>
-<body>
+<body id="page-top">
 
 <!-- Page Wrapper -->
 <div id="wrapper">
-    <partial name="_NavBar" />
+    <partial name="_NavBar"/>
     <!-- Content Wrapper -->
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-        <partial name="_TopBar" />
-        @RenderBody()
-        <partial name="_Footer"/>
+        <div id="content">
+            <partial name="_TopBar"/>
+            @RenderBody()
+            <partial name="_Footer"/>
+        </div>
+        <!-- End of Content Wrapper -->
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 </div>
-<!-- End of Page Wrapper -->
 
 <script src="~/lib/jquery-easing/jquery.easing.min.js"></script>
 

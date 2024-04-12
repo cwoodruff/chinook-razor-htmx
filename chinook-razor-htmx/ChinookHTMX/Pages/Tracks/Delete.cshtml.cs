@@ -19,8 +19,7 @@ namespace ChinookHTMX.Pages.Tracks
             _context = context;
         }
 
-        [BindProperty]
-        public Track Track { get; set; } = default!;
+        [BindProperty] public Track Track { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +38,7 @@ namespace ChinookHTMX.Pages.Tracks
             {
                 Track = track;
             }
+
             return Page();
         }
 

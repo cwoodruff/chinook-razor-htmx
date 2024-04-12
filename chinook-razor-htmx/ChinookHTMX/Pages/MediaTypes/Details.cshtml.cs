@@ -37,6 +37,7 @@ namespace ChinookHTMX.Pages.MediaTypes
             {
                 MediaType = mediatype;
             }
+
             return Page();
         }
     }

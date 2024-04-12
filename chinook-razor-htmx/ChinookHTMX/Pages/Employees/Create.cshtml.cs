@@ -21,12 +21,11 @@ namespace ChinookHTMX.Pages.Employees
 
         public IActionResult OnGet()
         {
-        ViewData["ReportsTo"] = new SelectList(_context.Employees, "Id", "Id");
+            ViewData["ReportsTo"] = new SelectList(_context.Employees, "Id", "Id");
             return Page();
         }
 
-        [BindProperty]
-        public Employee Employee { get; set; } = default!;
+        [BindProperty] public Employee Employee { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

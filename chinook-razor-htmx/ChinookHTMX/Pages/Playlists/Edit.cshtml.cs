@@ -20,8 +20,7 @@ namespace ChinookHTMX.Pages.Playlists
             _context = context;
         }
 
-        [BindProperty]
-        public Playlist Playlist { get; set; } = default!;
+        [BindProperty] public Playlist Playlist { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -30,11 +29,12 @@ namespace ChinookHTMX.Pages.Playlists
                 return NotFound();
             }
 
-            var playlist =  await _context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
+            var playlist = await _context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
             if (playlist == null)
             {
                 return NotFound();
             }
+
             Playlist = playlist;
             return Page();
         }

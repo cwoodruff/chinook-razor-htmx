@@ -19,8 +19,7 @@ namespace ChinookHTMX.Pages.MediaTypes
             _context = context;
         }
 
-        [BindProperty]
-        public MediaType MediaType { get; set; } = default!;
+        [BindProperty] public MediaType MediaType { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +38,7 @@ namespace ChinookHTMX.Pages.MediaTypes
             {
                 MediaType = mediatype;
             }
+
             return Page();
         }
 

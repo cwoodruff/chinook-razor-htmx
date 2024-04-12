@@ -37,6 +37,7 @@ namespace ChinookHTMX.Pages.Genres
             {
                 Genre = genre;
             }
+
             return Page();
         }
     }

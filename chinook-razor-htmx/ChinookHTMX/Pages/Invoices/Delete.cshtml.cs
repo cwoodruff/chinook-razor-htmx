@@ -19,8 +19,7 @@ namespace ChinookHTMX.Pages.Invoices
             _context = context;
         }
 
-        [BindProperty]
-        public Invoice Invoice { get; set; } = default!;
+        [BindProperty] public Invoice Invoice { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +38,7 @@ namespace ChinookHTMX.Pages.Invoices
             {
                 Invoice = invoice;
             }
+
             return Page();
         }
 

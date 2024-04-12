@@ -19,7 +19,7 @@ namespace ChinookHTMX.Pages.Customers
             _context = context;
         }
 
-        public IList<Customer> Customer { get;set; } = default!;
+        public IList<Customer> Customer { get; set; } = default!;
 
         public async Task OnGetAsync()
         {

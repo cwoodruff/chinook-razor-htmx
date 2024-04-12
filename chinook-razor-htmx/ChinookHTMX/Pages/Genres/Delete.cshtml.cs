@@ -19,8 +19,7 @@ namespace ChinookHTMX.Pages.Genres
             _context = context;
         }
 
-        [BindProperty]
-        public Genre Genre { get; set; } = default!;
+        [BindProperty] public Genre Genre { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -39,6 +38,7 @@ namespace ChinookHTMX.Pages.Genres
             {
                 Genre = genre;
             }
+
             return Page();
         }
 

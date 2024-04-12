@@ -5,110 +5,138 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<!-- Main Content -->
+<div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].BirthDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].HireDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].State)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].Country)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].PostalCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].Fax)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Employee[0].ReportsToNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Employee) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HireDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Country)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostalCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fax)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReportsToNavigation.Id)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Employees</h1>
+        </div>
+
+        <p>
+            <a asp-page="Create" class="btn btn-primary btn-icon-split">
+                <span class="icon text-white-50">
+                    <i class="fas fa-flag"></i>
+                </span>
+                <span class="text">Create New Employee</span>
+            </a>
+        </p>
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Albums</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable">
+                        <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].LastName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].FirstName)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].Title)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].BirthDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].HireDate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].Address)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].City)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].State)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].Country)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].PostalCode)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].Phone)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].Fax)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].Email)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Employee[0].ReportsToNavigation)
+                            </th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var item in Model.Employee)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LastName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FirstName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Title)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BirthDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.HireDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.City)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.State)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Country)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PostalCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Phone)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Fax)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ReportsToNavigation.Id)
+                                </td>
+                                <td>
+                                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.container-fluid -->
+</div>
+<!-- End of Main Content -->

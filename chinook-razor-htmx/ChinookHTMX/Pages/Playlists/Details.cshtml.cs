@@ -37,6 +37,7 @@ namespace ChinookHTMX.Pages.Playlists
             {
                 Playlist = playlist;
             }
+
             return Page();
         }
     }
