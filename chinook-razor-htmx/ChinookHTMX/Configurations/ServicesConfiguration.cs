@@ -1,6 +1,3 @@
-using Microsoft.AspNetCore.HttpLogging;
-using Microsoft.Extensions.Options;
-
 namespace ChinookHTMX.Configurations;
 
 public static class ServicesConfiguration

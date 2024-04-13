@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace ChinookHTMX.Entities;
+﻿namespace ChinookHTMX.Entities;
 
 public partial class InvoiceLine
 {

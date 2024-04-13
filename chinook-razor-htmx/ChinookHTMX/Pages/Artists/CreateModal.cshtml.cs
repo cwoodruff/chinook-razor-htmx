@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using ChinookHTMX.Data;
 using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.Artists
 {
-    public class CreateModel : PageModel
+    public class CreateModal : PageModel
     {
         private readonly ChinookHTMX.Data.ChinookContext _context;
 
-        public CreateModel(ChinookHTMX.Data.ChinookContext context)
+        public CreateModal(ChinookHTMX.Data.ChinookContext context)
         {
             _context = context;
         }

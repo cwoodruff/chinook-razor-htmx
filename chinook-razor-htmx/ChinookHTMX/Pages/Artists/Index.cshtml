@@ -16,12 +16,21 @@
         </div>
 
         <p>
-            <a asp-page="Create" class="btn btn-primary btn-icon-split">
+            @* <a asp-page="Create" class="btn btn-primary btn-icon-split"> *@
+            @*     <span class="icon text-white-50"> *@
+            @*         <i class="fas fa-flag"></i> *@
+            @*     </span> *@
+            @*     <span class="text">Create New Artist</span> *@
+            @* </a> *@
+            <button hx-get hx-page="Index"
+                    hx-page-handler="ModalCreate"
+                    hx-target="#modal-create"
+                    class="btn btn-primary btn-icon-split">
                 <span class="icon text-white-50">
                     <i class="fas fa-flag"></i>
                 </span>
                 <span class="text">Create New Artist</span>
-            </a>
+            </button>
         </p>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -46,9 +55,37 @@
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
                                 <td>
-                                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                    @* <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> | *@
+                                    @* <a asp-page="./Details" asp-route-id="@item.Id">Details</a> | *@
+                                    @* <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a> *@
+
+                                    <button hx-get hx-page="Index"
+                                            hx-page-handler="ModalEdit"
+                                            hx-target="#modal-edit"
+                                            class="btn btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-flag"></i>
+                                        </span>
+                                        <span class="text">Edit</span>
+                                    </button>
+                                    <button hx-get hx-page="Index"
+                                            hx-page-handler="ModalDetails"
+                                            hx-target="#modal-details"
+                                            class="btn btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-flag"></i>
+                                        </span>
+                                        <span class="text">Details</span>
+                                    </button>
+                                    <button hx-get hx-page="Index"
+                                            hx-page-handler="ModalDelete"
+                                            hx-target="#modal-delete"
+                                            class="btn btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-flag"></i>
+                                        </span>
+                                        <span class="text">Delete</span>
+                                    </button>
                                 </td>
                             </tr>
                         }
@@ -62,3 +99,11 @@
     <!-- /.container-fluid -->
 </div>
 <!-- End of Main Content -->
+
+<div id="modal-create"></div>
+
+<div id="modal-edit"></div>
+
+<div id="modal-delete"></div>
+
+<div id="modal-details"></div>
