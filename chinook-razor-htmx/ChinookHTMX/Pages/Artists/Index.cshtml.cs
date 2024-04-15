@@ -3,40 +3,88 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Artists
+namespace ChinookHTMX.Pages.Artists;
+
+public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+    public IList<Artist> Artists { get; set; } = default!;
+    public Artist Artist { get; set; }
+
+    public async Task OnGetAsync()
     {
-        public IList<Artist> Artist { get; set; } = default!;
+        Artists = await context.Artists.ToListAsync();
+    }
+        
+    public IActionResult OnGetModalCreate()
+    {
+        return Partial("CreateModal");
+    }
 
-        public async Task OnGetAsync()
-        {
-            Artist = await context.Artists.ToListAsync();
-        }
+    public IActionResult OnPostModalCreate()
+    {
+        return Partial("Success", this);
+    }
         
-        public IActionResult OnGetModalCreate()
+    public IActionResult OnGetModalEdit(int id)
+    {
+        Artist = context.Artists.Find(id) ?? throw new ArgumentNullException("context.Artists.Find(id)");
+        return Partial("EditModal", Artist);
+    }
+        
+    public async Task<IActionResult> OnPostModalEdit([FromForm] Artist artist)
+    {
+        if (!ModelState.IsValid)
         {
-            return Partial("CreateModal");
+            return Page();
         }
 
-        public IActionResult OnPostModalCreate()
+        context.Attach(artist).State = EntityState.Modified;
+
+        if (!ArtistExists(artist.Id))
         {
-            return Partial("Success", this);
+            return NotFound();
         }
+        else
+        {
+            Artist = artist;
+            context.Artists.Update(Artist);
+            await context.SaveChangesAsync();
+        }
+
+        return Partial("_EditSuccess", this);
+    }
         
-        public IActionResult OnGetModalEdit()
-        {
-            return Partial("EditModal");
-        }
+    public IActionResult OnGetModalDelete(int id)
+    {
+        Artist = context.Artists.Find(id) ?? throw new ArgumentNullException("context.Artists.Find(id)");
+        return Partial("DeleteModal", Artist);
+    }
         
-        public IActionResult OnGetModalDelete()
+    public async Task<IActionResult> OnPostModalDelete([FromForm] int? id)
+    {
+        if (id == null)
         {
-            return Partial("DeleteModal");
+            return NotFound();
         }
+
+        var artist = await context.Artists.FindAsync(id);
+        if (artist != null)
+        {
+            Artist = artist;
+            context.Artists.Remove(Artist);
+            await context.SaveChangesAsync();
+        }
+        return Partial("_DeleteSuccess", Artist);
+    }
         
-        public IActionResult OnGetModalDetails()
-        {
-            return Partial("DetailsModal");
-        }
+    public IActionResult OnGetModalDetails(int? id)
+    {
+        Artist artist = context.Artists.Find(id) ?? throw new ArgumentNullException("context.Artists.Find(id)");
+        return Partial("DetailsModal", artist);
+    }
+    
+    private bool ArtistExists(int id)
+    {
+        return context.Artists.Any(e => e.Id == id);
     }
 }

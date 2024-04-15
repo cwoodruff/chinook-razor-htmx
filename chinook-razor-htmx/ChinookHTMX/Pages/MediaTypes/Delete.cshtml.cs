@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.MediaTypes
+namespace ChinookHTMX.Pages.MediaTypes;
+
+public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class DeleteModel : PageModel
+    [BindProperty] public MediaType MediaType { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public DeleteModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public MediaType MediaType { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var mediatype = await _context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
+            var mediatype = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
 
             if (mediatype == null)
             {
@@ -37,22 +30,21 @@ namespace ChinookHTMX.Pages.MediaTypes
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var mediatype = await _context.MediaTypes.FindAsync(id);
+            var mediatype = await context.MediaTypes.FindAsync(id);
             if (mediatype != null)
             {
                 MediaType = mediatype;
-                _context.MediaTypes.Remove(MediaType);
-                await _context.SaveChangesAsync();
+                context.MediaTypes.Remove(MediaType);
+                await context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
-    }
 }

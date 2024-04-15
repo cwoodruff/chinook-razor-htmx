@@ -2,36 +2,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Playlists
+namespace ChinookHTMX.Pages.Playlists;
+
+public class CreateModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class CreateModel : PageModel
+    public IActionResult OnGet()
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public CreateModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        public IActionResult OnGet()
-        {
             return Page();
         }
 
-        [BindProperty] public Playlist Playlist { get; set; } = default!;
+    [BindProperty] public Playlist Playlist { get; set; } = default!;
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+    public async Task<IActionResult> OnPostAsync()
+    {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Playlists.Add(Playlist);
-            await _context.SaveChangesAsync();
+            context.Playlists.Add(Playlist);
+            await context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
-    }
 }

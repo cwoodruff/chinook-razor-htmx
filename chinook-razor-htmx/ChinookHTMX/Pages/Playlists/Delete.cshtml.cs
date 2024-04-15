@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Playlists
+namespace ChinookHTMX.Pages.Playlists;
+
+public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class DeleteModel : PageModel
+    [BindProperty] public Playlist Playlist { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public DeleteModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public Playlist Playlist { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var playlist = await _context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
+            var playlist = await context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
 
             if (playlist == null)
             {
@@ -37,22 +30,21 @@ namespace ChinookHTMX.Pages.Playlists
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var playlist = await _context.Playlists.FindAsync(id);
+            var playlist = await context.Playlists.FindAsync(id);
             if (playlist != null)
             {
                 Playlist = playlist;
-                _context.Playlists.Remove(Playlist);
-                await _context.SaveChangesAsync();
+                context.Playlists.Remove(Playlist);
+                await context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
-    }
 }

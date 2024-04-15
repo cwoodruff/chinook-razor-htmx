@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Invoices
+namespace ChinookHTMX.Pages.Invoices;
+
+public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class DeleteModel : PageModel
+    [BindProperty] public Invoice Invoice { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public DeleteModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public Invoice Invoice { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var invoice = await _context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
+            var invoice = await context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
 
             if (invoice == null)
             {
@@ -37,22 +30,21 @@ namespace ChinookHTMX.Pages.Invoices
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var invoice = await _context.Invoices.FindAsync(id);
+            var invoice = await context.Invoices.FindAsync(id);
             if (invoice != null)
             {
                 Invoice = invoice;
-                _context.Invoices.Remove(Invoice);
-                await _context.SaveChangesAsync();
+                context.Invoices.Remove(Invoice);
+                await context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
-    }
 }

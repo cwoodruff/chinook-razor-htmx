@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Playlists
+namespace ChinookHTMX.Pages.Playlists;
+
+public class EditModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class EditModel : PageModel
+    [BindProperty] public Playlist Playlist { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public EditModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public Playlist Playlist { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var playlist = await _context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
+            var playlist = await context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
             if (playlist == null)
             {
                 return NotFound();
@@ -33,20 +26,20 @@ namespace ChinookHTMX.Pages.Playlists
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task<IActionResult> OnPostAsync()
+    {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Playlist).State = EntityState.Modified;
+            context.Attach(Playlist).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -63,9 +56,8 @@ namespace ChinookHTMX.Pages.Playlists
             return RedirectToPage("./Index");
         }
 
-        private bool PlaylistExists(int id)
-        {
-            return _context.Playlists.Any(e => e.Id == id);
+    private bool PlaylistExists(int id)
+    {
+            return context.Playlists.Any(e => e.Id == id);
         }
-    }
 }

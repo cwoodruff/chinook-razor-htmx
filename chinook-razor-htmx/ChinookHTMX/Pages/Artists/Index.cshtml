@@ -42,13 +42,13 @@
                         <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Artist[0].Name)
+                                @Html.DisplayNameFor(model => model.Artists[0].Name)
                             </th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var item in Model.Artist)
+                        @foreach (var item in Model.Artists)
                         {
                             <tr>
                                 <td>
@@ -62,6 +62,7 @@
                                     <button hx-get hx-page="Index"
                                             hx-page-handler="ModalEdit"
                                             hx-target="#modal-edit"
+                                            hx-route-id="@item.Id"
                                             class="btn btn-primary btn-icon-split">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-flag"></i>
@@ -71,6 +72,7 @@
                                     <button hx-get hx-page="Index"
                                             hx-page-handler="ModalDetails"
                                             hx-target="#modal-details"
+                                            hx-route-id="@item.Id"
                                             class="btn btn-primary btn-icon-split">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-flag"></i>
@@ -80,6 +82,7 @@
                                     <button hx-get hx-page="Index"
                                             hx-page-handler="ModalDelete"
                                             hx-target="#modal-delete"
+                                            hx-route-id="@item.Id"
                                             class="btn btn-primary btn-icon-split">
                                         <span class="icon text-white-50">
                                             <i class="fas fa-flag"></i>

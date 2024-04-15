@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Genres
+namespace ChinookHTMX.Pages.Genres;
+
+public class DetailsModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class DetailsModel : PageModel
+    public Genre Genre { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public DetailsModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        public Genre Genre { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var genre = await _context.Genres.FirstOrDefaultAsync(m => m.Id == id);
+            var genre = await context.Genres.FirstOrDefaultAsync(m => m.Id == id);
             if (genre == null)
             {
                 return NotFound();
@@ -35,5 +28,4 @@ namespace ChinookHTMX.Pages.Genres
 
             return Page();
         }
-    }
 }

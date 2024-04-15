@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.InvoiceLines
+namespace ChinookHTMX.Pages.InvoiceLines;
+
+public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class DeleteModel : PageModel
+    [BindProperty] public InvoiceLine InvoiceLine { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public DeleteModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public InvoiceLine InvoiceLine { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var invoiceline = await _context.InvoiceLines.FirstOrDefaultAsync(m => m.Id == id);
+            var invoiceline = await context.InvoiceLines.FirstOrDefaultAsync(m => m.Id == id);
 
             if (invoiceline == null)
             {
@@ -37,22 +30,21 @@ namespace ChinookHTMX.Pages.InvoiceLines
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var invoiceline = await _context.InvoiceLines.FindAsync(id);
+            var invoiceline = await context.InvoiceLines.FindAsync(id);
             if (invoiceline != null)
             {
                 InvoiceLine = invoiceline;
-                _context.InvoiceLines.Remove(InvoiceLine);
-                await _context.SaveChangesAsync();
+                context.InvoiceLines.Remove(InvoiceLine);
+                await context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
-    }
 }

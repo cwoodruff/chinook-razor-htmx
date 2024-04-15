@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Albums
+namespace ChinookHTMX.Pages.Albums;
+
+public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class DeleteModel : PageModel
+    [BindProperty] public Album Album { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public DeleteModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public Album Album { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var album = await _context.Albums.FirstOrDefaultAsync(m => m.Id == id);
+            var album = await context.Albums.FirstOrDefaultAsync(m => m.Id == id);
 
             if (album == null)
             {
@@ -37,22 +30,21 @@ namespace ChinookHTMX.Pages.Albums
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var album = await _context.Albums.FindAsync(id);
+            var album = await context.Albums.FindAsync(id);
             if (album != null)
             {
                 Album = album;
-                _context.Albums.Remove(Album);
-                await _context.SaveChangesAsync();
+                context.Albums.Remove(Album);
+                await context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
-    }
 }

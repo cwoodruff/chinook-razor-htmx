@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Tracks
+namespace ChinookHTMX.Pages.Tracks;
+
+public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class DeleteModel : PageModel
+    [BindProperty] public Track Track { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public DeleteModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public Track Track { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var track = await _context.Tracks.FirstOrDefaultAsync(m => m.Id == id);
+            var track = await context.Tracks.FirstOrDefaultAsync(m => m.Id == id);
 
             if (track == null)
             {
@@ -37,22 +30,21 @@ namespace ChinookHTMX.Pages.Tracks
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var track = await _context.Tracks.FindAsync(id);
+            var track = await context.Tracks.FindAsync(id);
             if (track != null)
             {
                 Track = track;
-                _context.Tracks.Remove(Track);
-                await _context.SaveChangesAsync();
+                context.Tracks.Remove(Track);
+                await context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
-    }
 }

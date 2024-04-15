@@ -4,53 +4,46 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Tracks
+namespace ChinookHTMX.Pages.Tracks;
+
+public class EditModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class EditModel : PageModel
+    [BindProperty] public Track Track { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public EditModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public Track Track { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var track = await _context.Tracks.FirstOrDefaultAsync(m => m.Id == id);
+            var track = await context.Tracks.FirstOrDefaultAsync(m => m.Id == id);
             if (track == null)
             {
                 return NotFound();
             }
 
             Track = track;
-            ViewData["AlbumId"] = new SelectList(_context.Albums, "Id", "Id");
-            ViewData["GenreId"] = new SelectList(_context.Genres, "Id", "Id");
-            ViewData["MediaTypeId"] = new SelectList(_context.MediaTypes, "Id", "Id");
+            ViewData["AlbumId"] = new SelectList(context.Albums, "Id", "Id");
+            ViewData["GenreId"] = new SelectList(context.Genres, "Id", "Id");
+            ViewData["MediaTypeId"] = new SelectList(context.MediaTypes, "Id", "Id");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task<IActionResult> OnPostAsync()
+    {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Track).State = EntityState.Modified;
+            context.Attach(Track).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -67,9 +60,8 @@ namespace ChinookHTMX.Pages.Tracks
             return RedirectToPage("./Index");
         }
 
-        private bool TrackExists(int id)
-        {
-            return _context.Tracks.Any(e => e.Id == id);
+    private bool TrackExists(int id)
+    {
+            return context.Tracks.Any(e => e.Id == id);
         }
-    }
 }

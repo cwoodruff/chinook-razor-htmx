@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Albums
+namespace ChinookHTMX.Pages.Albums;
+
+public class DetailsModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class DetailsModel : PageModel
+    public Album Album { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public DetailsModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        public Album Album { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var album = await _context.Albums.FirstOrDefaultAsync(m => m.Id == id);
+            var album = await context.Albums.FirstOrDefaultAsync(m => m.Id == id);
             if (album == null)
             {
                 return NotFound();
@@ -35,5 +28,4 @@ namespace ChinookHTMX.Pages.Albums
 
             return Page();
         }
-    }
 }

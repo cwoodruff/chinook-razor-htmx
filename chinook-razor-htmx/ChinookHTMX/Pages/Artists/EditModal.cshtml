@@ -1,39 +1,42 @@
-@model ChinookHTMX.Pages.Artists.EditModal
+@model ChinookHTMX.Entities.Artist
 
 <div id="edit-artist-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div id="modal-body" class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Artist</h5>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close">
-                </button>
-            </div>
             <div class="modal-body">
-                <form id="EditForm" hx-post
-                      hx-page="index"
-                      hx-page-handler="ModalEdit"
-                      hx-target="closest .modal-body">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Artist.Id"/>
-                    <div class="form-group">
-                        <label asp-for="Artist.Name" class="control-label"></label>
-                        <input asp-for="Artist.Name" class="form-control"/>
-                        <span asp-validation-for="Artist.Name" class="text-danger"></span>
+                <div class="card shadow mb-4">
+                    <!-- Card Header -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Edit Artist</h6>
+                        <button type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close">
+                        </button>
                     </div>
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary"/>
+                    <div class="card-body">
+                        <form id="EditForm"
+                              hx-post="@Url.Page("/Artists/Index", "ModalEdit")"
+                              hx-target="#model-results"
+                              hx-trigger="submit">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id"/>
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control"/>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </form>
+                        <div id="model-results"></div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button form="EditForm"
-                        type="submit"
-                        class="btn btn-primary">
-                    Create
-                </button>
+                    <div class="modal-footer">
+                        <button form="EditForm"
+                                type="submit"
+                                class="btn btn-primary">
+                            Save
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

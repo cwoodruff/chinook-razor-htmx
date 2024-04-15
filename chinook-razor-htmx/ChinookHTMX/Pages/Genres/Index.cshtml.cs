@@ -2,22 +2,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Genres
+namespace ChinookHTMX.Pages.Genres;
+
+public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class IndexModel : PageModel
+    public IList<Genre> Genre { get; set; } = default!;
+
+    public async Task OnGetAsync()
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public IndexModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
+            Genre = await context.Genres.ToListAsync();
         }
-
-        public IList<Genre> Genre { get; set; } = default!;
-
-        public async Task OnGetAsync()
-        {
-            Genre = await _context.Genres.ToListAsync();
-        }
-    }
 }

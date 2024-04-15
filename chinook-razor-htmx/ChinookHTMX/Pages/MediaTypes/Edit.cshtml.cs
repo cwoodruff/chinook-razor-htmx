@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.MediaTypes
+namespace ChinookHTMX.Pages.MediaTypes;
+
+public class EditModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class EditModel : PageModel
+    [BindProperty] public MediaType MediaType { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public EditModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public MediaType MediaType { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var mediatype = await _context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
+            var mediatype = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
             if (mediatype == null)
             {
                 return NotFound();
@@ -33,20 +26,20 @@ namespace ChinookHTMX.Pages.MediaTypes
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task<IActionResult> OnPostAsync()
+    {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(MediaType).State = EntityState.Modified;
+            context.Attach(MediaType).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -63,9 +56,8 @@ namespace ChinookHTMX.Pages.MediaTypes
             return RedirectToPage("./Index");
         }
 
-        private bool MediaTypeExists(int id)
-        {
-            return _context.MediaTypes.Any(e => e.Id == id);
+    private bool MediaTypeExists(int id)
+    {
+            return context.MediaTypes.Any(e => e.Id == id);
         }
-    }
 }

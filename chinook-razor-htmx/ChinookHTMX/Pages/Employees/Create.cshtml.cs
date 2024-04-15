@@ -3,37 +3,29 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Employees
+namespace ChinookHTMX.Pages.Employees;
+
+public class CreateModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class CreateModel : PageModel
+    public IActionResult OnGet()
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public CreateModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        public IActionResult OnGet()
-        {
-            ViewData["ReportsTo"] = new SelectList(_context.Employees, "Id", "Id");
+            ViewData["ReportsTo"] = new SelectList(context.Employees, "Id", "Id");
             return Page();
         }
 
-        [BindProperty] public Employee Employee { get; set; } = default!;
+    [BindProperty] public Employee Employee { get; set; } = default!;
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+    public async Task<IActionResult> OnPostAsync()
+    {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Employees.Add(Employee);
-            await _context.SaveChangesAsync();
+            context.Employees.Add(Employee);
+            await context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
-    }
 }

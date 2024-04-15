@@ -2,23 +2,15 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Invoices
+namespace ChinookHTMX.Pages.Invoices;
+
+public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class IndexModel : PageModel
+    public IList<Invoice> Invoice { get; set; } = default!;
+
+    public async Task OnGetAsync()
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public IndexModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        public IList<Invoice> Invoice { get; set; } = default!;
-
-        public async Task OnGetAsync()
-        {
-            Invoice = await _context.Invoices
+            Invoice = await context.Invoices
                 .Include(i => i.Customer).ToListAsync();
         }
-    }
 }

@@ -4,51 +4,44 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Invoices
+namespace ChinookHTMX.Pages.Invoices;
+
+public class EditModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class EditModel : PageModel
+    [BindProperty] public Invoice Invoice { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public EditModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public Invoice Invoice { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var invoice = await _context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
+            var invoice = await context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
             if (invoice == null)
             {
                 return NotFound();
             }
 
             Invoice = invoice;
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Id");
+            ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "Id");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task<IActionResult> OnPostAsync()
+    {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Invoice).State = EntityState.Modified;
+            context.Attach(Invoice).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -65,9 +58,8 @@ namespace ChinookHTMX.Pages.Invoices
             return RedirectToPage("./Index");
         }
 
-        private bool InvoiceExists(int id)
-        {
-            return _context.Invoices.Any(e => e.Id == id);
+    private bool InvoiceExists(int id)
+    {
+            return context.Invoices.Any(e => e.Id == id);
         }
-    }
 }

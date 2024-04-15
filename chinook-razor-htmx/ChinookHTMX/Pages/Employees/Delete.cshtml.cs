@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Employees
+namespace ChinookHTMX.Pages.Employees;
+
+public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class DeleteModel : PageModel
+    [BindProperty] public Employee Employee { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public DeleteModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public Employee Employee { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FirstOrDefaultAsync(m => m.Id == id);
+            var employee = await context.Employees.FirstOrDefaultAsync(m => m.Id == id);
 
             if (employee == null)
             {
@@ -37,22 +30,21 @@ namespace ChinookHTMX.Pages.Employees
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
-        {
+    public async Task<IActionResult> OnPostAsync(int? id)
+    {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var employee = await _context.Employees.FindAsync(id);
+            var employee = await context.Employees.FindAsync(id);
             if (employee != null)
             {
                 Employee = employee;
-                _context.Employees.Remove(Employee);
-                await _context.SaveChangesAsync();
+                context.Employees.Remove(Employee);
+                await context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");
         }
-    }
 }

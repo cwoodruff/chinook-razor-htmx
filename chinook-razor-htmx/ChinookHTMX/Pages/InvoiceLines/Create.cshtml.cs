@@ -3,38 +3,30 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.InvoiceLines
+namespace ChinookHTMX.Pages.InvoiceLines;
+
+public class CreateModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class CreateModel : PageModel
+    public IActionResult OnGet()
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public CreateModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        public IActionResult OnGet()
-        {
-            ViewData["InvoiceId"] = new SelectList(_context.Invoices, "Id", "Id");
-            ViewData["TrackId"] = new SelectList(_context.Tracks, "Id", "Id");
+            ViewData["InvoiceId"] = new SelectList(context.Invoices, "Id", "Id");
+            ViewData["TrackId"] = new SelectList(context.Tracks, "Id", "Id");
             return Page();
         }
 
-        [BindProperty] public InvoiceLine InvoiceLine { get; set; } = default!;
+    [BindProperty] public InvoiceLine InvoiceLine { get; set; } = default!;
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+    public async Task<IActionResult> OnPostAsync()
+    {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.InvoiceLines.Add(InvoiceLine);
-            await _context.SaveChangesAsync();
+            context.InvoiceLines.Add(InvoiceLine);
+            await context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
-    }
 }

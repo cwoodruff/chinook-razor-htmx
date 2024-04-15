@@ -3,27 +3,20 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.Invoices
+namespace ChinookHTMX.Pages.Invoices;
+
+public class DetailsModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class DetailsModel : PageModel
+    public Invoice Invoice { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public DetailsModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        public Invoice Invoice { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var invoice = await _context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
+            var invoice = await context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
             if (invoice == null)
             {
                 return NotFound();
@@ -35,5 +28,4 @@ namespace ChinookHTMX.Pages.Invoices
 
             return Page();
         }
-    }
 }

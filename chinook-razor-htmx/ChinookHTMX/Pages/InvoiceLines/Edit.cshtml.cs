@@ -4,52 +4,45 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.InvoiceLines
+namespace ChinookHTMX.Pages.InvoiceLines;
+
+public class EditModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public class EditModel : PageModel
+    [BindProperty] public InvoiceLine InvoiceLine { get; set; } = default!;
+
+    public async Task<IActionResult> OnGetAsync(int? id)
     {
-        private readonly ChinookHTMX.Data.ChinookContext _context;
-
-        public EditModel(ChinookHTMX.Data.ChinookContext context)
-        {
-            _context = context;
-        }
-
-        [BindProperty] public InvoiceLine InvoiceLine { get; set; } = default!;
-
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var invoiceline = await _context.InvoiceLines.FirstOrDefaultAsync(m => m.Id == id);
+            var invoiceline = await context.InvoiceLines.FirstOrDefaultAsync(m => m.Id == id);
             if (invoiceline == null)
             {
                 return NotFound();
             }
 
             InvoiceLine = invoiceline;
-            ViewData["InvoiceId"] = new SelectList(_context.Invoices, "Id", "Id");
-            ViewData["TrackId"] = new SelectList(_context.Tracks, "Id", "Id");
+            ViewData["InvoiceId"] = new SelectList(context.Invoices, "Id", "Id");
+            ViewData["TrackId"] = new SelectList(context.Tracks, "Id", "Id");
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see https://aka.ms/RazorPagesCRUD.
+    public async Task<IActionResult> OnPostAsync()
+    {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(InvoiceLine).State = EntityState.Modified;
+            context.Attach(InvoiceLine).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -66,9 +59,8 @@ namespace ChinookHTMX.Pages.InvoiceLines
             return RedirectToPage("./Index");
         }
 
-        private bool InvoiceLineExists(int id)
-        {
-            return _context.InvoiceLines.Any(e => e.Id == id);
+    private bool InvoiceLineExists(int id)
+    {
+            return context.InvoiceLines.Any(e => e.Id == id);
         }
-    }
 }

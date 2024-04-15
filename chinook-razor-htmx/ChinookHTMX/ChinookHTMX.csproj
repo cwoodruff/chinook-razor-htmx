@@ -79,7 +79,6 @@
 
     <ItemGroup>
         <Folder Include="Pages\Albums\"/>
-        <Folder Include="Pages\Artists\"/>
         <Folder Include="Pages\Customers\"/>
         <Folder Include="Pages\Employees\"/>
         <Folder Include="Pages\Genres\"/>
