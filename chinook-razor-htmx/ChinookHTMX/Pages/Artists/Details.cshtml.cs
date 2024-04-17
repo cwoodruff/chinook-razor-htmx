@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 
-namespace ChinookHTMX.Pages.InvoiceLines;
+namespace ChinookHTMX.Pages.Artists;
 
 public class DetailsModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    public InvoiceLine InvoiceLine { get; set; } = default!;
+    public Artist Artist { get; set; } = default!;
 
     public async Task<IActionResult> OnGetAsync(int? id)
     {
@@ -16,14 +16,16 @@ public class DetailsModel(ChinookHTMX.Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var invoiceline = await context.InvoiceLines.FirstOrDefaultAsync(m => m.Id == id);
-        if (invoiceline == null)
+        Artist = await context.Artists.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Artist == null)
         {
             return NotFound();
         }
-        else
+
+        if (HttpContext.Request.Headers["HX-Request"].FirstOrDefault() == "true")
         {
-            InvoiceLine = invoiceline;
+            return Partial("Artists/DetailsModal", this);
         }
 
         return Page();

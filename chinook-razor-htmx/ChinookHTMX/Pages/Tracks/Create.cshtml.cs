@@ -9,25 +9,25 @@ public class CreateModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
     public IActionResult OnGet()
     {
-            ViewData["AlbumId"] = new SelectList(context.Albums, "Id", "Id");
-            ViewData["GenreId"] = new SelectList(context.Genres, "Id", "Id");
-            ViewData["MediaTypeId"] = new SelectList(context.MediaTypes, "Id", "Id");
-            return Page();
-        }
+        ViewData["AlbumId"] = new SelectList(context.Albums, "Id", "Id");
+        ViewData["GenreId"] = new SelectList(context.Genres, "Id", "Id");
+        ViewData["MediaTypeId"] = new SelectList(context.MediaTypes, "Id", "Id");
+        return Page();
+    }
 
     [BindProperty] public Track Track { get; set; } = default!;
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
     public async Task<IActionResult> OnPostAsync()
     {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            context.Tracks.Add(Track);
-            await context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+        if (!ModelState.IsValid)
+        {
+            return Page();
         }
+
+        context.Tracks.Add(Track);
+        await context.SaveChangesAsync();
+
+        return RedirectToPage("./Index");
+    }
 }

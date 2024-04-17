@@ -10,7 +10,7 @@ public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 
     public async Task OnGetAsync()
     {
-            Employee = await context.Employees
-                .Include(e => e.ReportsToNavigation).ToListAsync();
-        }
+        Employee = await context.Employees
+            .Include(e => e.ReportsToNavigation).ToListAsync();
+    }
 }

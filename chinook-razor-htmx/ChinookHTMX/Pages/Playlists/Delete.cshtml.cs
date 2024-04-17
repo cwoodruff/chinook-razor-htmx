@@ -11,40 +11,40 @@ public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int? id)
     {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var playlist = await context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
-
-            if (playlist == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Playlist = playlist;
-            }
-
-            return Page();
+        if (id == null)
+        {
+            return NotFound();
         }
+
+        var playlist = await context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (playlist == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            Playlist = playlist;
+        }
+
+        return Page();
+    }
 
     public async Task<IActionResult> OnPostAsync(int? id)
     {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var playlist = await context.Playlists.FindAsync(id);
-            if (playlist != null)
-            {
-                Playlist = playlist;
-                context.Playlists.Remove(Playlist);
-                await context.SaveChangesAsync();
-            }
-
-            return RedirectToPage("./Index");
+        if (id == null)
+        {
+            return NotFound();
         }
+
+        var playlist = await context.Playlists.FindAsync(id);
+        if (playlist != null)
+        {
+            Playlist = playlist;
+            context.Playlists.Remove(Playlist);
+            await context.SaveChangesAsync();
+        }
+
+        return RedirectToPage("./Index");
+    }
 }

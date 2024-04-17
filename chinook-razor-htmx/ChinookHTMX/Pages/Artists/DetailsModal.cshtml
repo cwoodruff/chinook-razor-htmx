@@ -1,4 +1,4 @@
-@model ChinookHTMX.Entities.Artist
+@model ChinookHTMX.Pages.Artists.DetailsModel
 
 <div id="details-artist-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -17,10 +17,10 @@
                     <div class="card-body">
                         <dl class="row">
                             <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Name)
+                                @Html.DisplayNameFor(model => model.Artist.Name)
                             </dt>
                             <dd class="col-sm-10">
-                                @Html.DisplayFor(model => model.Name)
+                                @Html.DisplayFor(model => model.Artist.Name)
                             </dd>
                         </dl>
                     </div>

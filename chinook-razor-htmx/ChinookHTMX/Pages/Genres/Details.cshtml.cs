@@ -11,21 +11,21 @@ public class DetailsModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int? id)
     {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var genre = await context.Genres.FirstOrDefaultAsync(m => m.Id == id);
-            if (genre == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Genre = genre;
-            }
-
-            return Page();
+        if (id == null)
+        {
+            return NotFound();
         }
+
+        var genre = await context.Genres.FirstOrDefaultAsync(m => m.Id == id);
+        if (genre == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            Genre = genre;
+        }
+
+        return Page();
+    }
 }

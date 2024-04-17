@@ -9,23 +9,23 @@ public class CreateModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
     public IActionResult OnGet()
     {
-            ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "Id");
-            return Page();
-        }
+        ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "Id");
+        return Page();
+    }
 
     [BindProperty] public Invoice Invoice { get; set; } = default!;
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
     public async Task<IActionResult> OnPostAsync()
     {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            context.Invoices.Add(Invoice);
-            await context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+        if (!ModelState.IsValid)
+        {
+            return Page();
         }
+
+        context.Invoices.Add(Invoice);
+        await context.SaveChangesAsync();
+
+        return RedirectToPage("./Index");
+    }
 }

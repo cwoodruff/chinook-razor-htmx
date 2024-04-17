@@ -9,23 +9,23 @@ public class CreateModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
     public IActionResult OnGet()
     {
-            ViewData["ReportsTo"] = new SelectList(context.Employees, "Id", "Id");
-            return Page();
-        }
+        ViewData["ReportsTo"] = new SelectList(context.Employees, "Id", "Id");
+        return Page();
+    }
 
     [BindProperty] public Employee Employee { get; set; } = default!;
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
     public async Task<IActionResult> OnPostAsync()
     {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            context.Employees.Add(Employee);
-            await context.SaveChangesAsync();
-
-            return RedirectToPage("./Index");
+        if (!ModelState.IsValid)
+        {
+            return Page();
         }
+
+        context.Employees.Add(Employee);
+        await context.SaveChangesAsync();
+
+        return RedirectToPage("./Index");
+    }
 }

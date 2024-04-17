@@ -10,9 +10,9 @@ public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 
     public async Task OnGetAsync()
     {
-            Track = await context.Tracks
-                .Include(t => t.Album)
-                .Include(t => t.Genre)
-                .Include(t => t.MediaType).ToListAsync();
-        }
+        Track = await context.Tracks
+            .Include(t => t.Album)
+            .Include(t => t.Genre)
+            .Include(t => t.MediaType).ToListAsync();
+    }
 }

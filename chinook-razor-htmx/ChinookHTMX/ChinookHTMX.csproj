@@ -55,6 +55,9 @@
         <_ContentIncludedByDefault Remove="wwwroot\lib\chart.js\Chart.bundle.min.js"/>
         <_ContentIncludedByDefault Remove="wwwroot\lib\chart.js\Chart.js"/>
         <_ContentIncludedByDefault Remove="wwwroot\lib\chart.js\Chart.min.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-easing\jquery.easing.compatibility.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-easing\jquery.easing.js"/>
+        <_ContentIncludedByDefault Remove="wwwroot\lib\jquery-easing\jquery.easing.min.js"/>
     </ItemGroup>
 
     <ItemGroup>

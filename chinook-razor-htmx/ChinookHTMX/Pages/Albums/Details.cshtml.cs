@@ -11,21 +11,21 @@ public class DetailsModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int? id)
     {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var album = await context.Albums.FirstOrDefaultAsync(m => m.Id == id);
-            if (album == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                Album = album;
-            }
-
-            return Page();
+        if (id == null)
+        {
+            return NotFound();
         }
+
+        var album = await context.Albums.FirstOrDefaultAsync(m => m.Id == id);
+        if (album == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            Album = album;
+        }
+
+        return Page();
+    }
 }

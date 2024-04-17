@@ -1,4 +1,4 @@
-@model ChinookHTMX.Entities.Artist
+@model ChinookHTMX.Pages.Artists.EditModel
 
 <div id="edit-artist-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -15,17 +15,17 @@
                         </button>
                     </div>
                     <div class="card-body">
-                        <form id="EditForm"
-                              hx-post="@Url.Page("/Artists/Index", "ModalEdit")"
-                              hx-target="#model-results"
-                              hx-trigger="submit">
+                        <form id="EditForm" method="post"
+                              hx-post="@Url.PageLink("Edit", "Modal")" 
+                              hx-target="#model-results">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <input type="hidden" asp-for="Id"/>
+                            <input type="hidden" asp-for="Artist.Id"/>
                             <div class="form-group">
-                                <label asp-for="Name" class="control-label"></label>
-                                <input asp-for="Name" class="form-control"/>
-                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <label asp-for="Artist.Name" class="control-label"></label>
+                                <input asp-for="Artist.Name" class="form-control"/>
+                                <span asp-validation-for="Artist.Name" class="text-danger"></span>
                             </div>
+                            @Html.AntiForgeryToken()
                         </form>
                         <div id="model-results"></div>
                     </div>

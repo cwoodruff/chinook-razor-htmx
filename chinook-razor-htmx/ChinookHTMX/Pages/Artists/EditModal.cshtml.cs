@@ -13,7 +13,7 @@ public class EditModal(ChinookHTMX.Data.ChinookContext context) : PageModel
     {
         Artist = await context.Artists.FindAsync(id);
     }
-    
+
     public async Task<IActionResult> OnPostModalEdit()
     {
         if (!ModelState.IsValid)
@@ -41,9 +41,9 @@ public class EditModal(ChinookHTMX.Data.ChinookContext context) : PageModel
 
         return RedirectToPage("./Index");
     }
-    
+
     private bool ArtistExists(int id)
     {
-        return context.Albums.Any(e => e.Id == id);
+        return context.Artists.Any(e => e.Id == id);
     }
 }

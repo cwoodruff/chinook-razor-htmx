@@ -11,21 +11,21 @@ public class DetailsModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 
     public async Task<IActionResult> OnGetAsync(int? id)
     {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var mediatype = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
-            if (mediatype == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                MediaType = mediatype;
-            }
-
-            return Page();
+        if (id == null)
+        {
+            return NotFound();
         }
+
+        var mediatype = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
+        if (mediatype == null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            MediaType = mediatype;
+        }
+
+        return Page();
+    }
 }

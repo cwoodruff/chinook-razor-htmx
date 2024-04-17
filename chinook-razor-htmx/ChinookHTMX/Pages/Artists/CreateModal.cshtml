@@ -1,4 +1,4 @@
-@model ChinookHTMX.Entities.Artist
+@model ChinookHTMX.Pages.Artists.CreateModel
 
 <div id="create-artist-modal" class="modal fade" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -11,19 +11,19 @@
                         <button type="button"
                                 class="btn-close"
                                 data-bs-dismiss="modal"
+                                onclick="javascript:window.location.reload()"
                                 aria-label="Close">
                         </button>
                     </div>
                     <div class="card-body">
-                        <form id="CreateForm" hx-post
-                              hx-page="index"
-                              hx-page-handler="ModalCreate"
-                              hx-target="closest .modal-body">
+                        <form id="CreateForm" method="post"
+                              hx-post="@Url.PageLink("Create")"
+                              hx-target="#model-results">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
-                                <label asp-for="Name" class="control-label"></label>
-                                <input asp-for="Name" class="form-control"/>
-                                <span asp-validation-for="Name" class="text-danger"></span>
+                                <label asp-for="Artist.Name" class="control-label"></label>
+                                <input asp-for="Artist.Name" class="form-control"/>
+                                <span asp-validation-for="Artist.Name" class="text-danger"></span>
                             </div>
                             @Html.AntiForgeryToken()
                         </form>

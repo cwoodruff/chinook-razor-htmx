@@ -1,31 +1,34 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using ChinookHTMX.Entities;
+using Htmx;
 
-namespace ChinookHTMX.Pages.Customers;
+namespace ChinookHTMX.Pages.Artists;
 
 public class CreateModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
+    [BindProperty] public Artist Artist { get; set; } = default!;
+
     public IActionResult OnGet()
     {
-        ViewData["SupportRepId"] = new SelectList(context.Employees, "Id", "Id");
+        if (Request.IsHtmx())
+        {
+            return Partial("Artists/CreateModal", this);
+        }
+
         return Page();
     }
-
-    [BindProperty] public Customer Customer { get; set; } = default!;
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
-            return Page();
+            return Partial("Artists/CreateModal", Artist);
         }
 
-        context.Customers.Add(Customer);
+        context.Artists.Add(Artist);
         await context.SaveChangesAsync();
-
-        return RedirectToPage("./Index");
+        return Partial("_CreateSuccess", this);
     }
 }

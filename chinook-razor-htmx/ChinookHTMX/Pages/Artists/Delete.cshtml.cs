@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
-namespace ChinookHTMX.Pages.MediaTypes;
+namespace ChinookHTMX.Pages.Artists;
 
 public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 {
-    [BindProperty] public MediaType MediaType { get; set; } = default!;
+    [BindProperty] public Artist Artist { get; set; } = default!;
 
     public async Task<IActionResult> OnGetAsync(int? id)
     {
@@ -16,20 +17,21 @@ public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var mediatype = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
+        Artist = await context.Artists.FirstOrDefaultAsync(m => m.Id == id);
 
-        if (mediatype == null)
+        if (Artist == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            MediaType = mediatype;
+            return Partial("Artists/DeleteModal", this);
         }
 
         return Page();
     }
-
+    
     public async Task<IActionResult> OnPostAsync(int? id)
     {
         if (id == null)
@@ -37,14 +39,14 @@ public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var mediatype = await context.MediaTypes.FindAsync(id);
-        if (mediatype != null)
+        var artist = await context.Artists.FindAsync(id);
+        if (artist != null)
         {
-            MediaType = mediatype;
-            context.MediaTypes.Remove(MediaType);
+            Artist = artist;
+            context.Artists.Remove(Artist);
             await context.SaveChangesAsync();
         }
 
-        return RedirectToPage("./Index");
+        return Partial("_DeleteSuccess", this);
     }
 }

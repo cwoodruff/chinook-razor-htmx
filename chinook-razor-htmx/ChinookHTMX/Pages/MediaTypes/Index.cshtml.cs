@@ -10,6 +10,6 @@ public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 
     public async Task OnGetAsync()
     {
-            MediaType = await context.MediaTypes.ToListAsync();
-        }
+        MediaType = await context.MediaTypes.ToListAsync();
+    }
 }

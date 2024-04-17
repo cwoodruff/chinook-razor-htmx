@@ -10,6 +10,6 @@ public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
 
     public async Task OnGetAsync()
     {
-            Genre = await context.Genres.ToListAsync();
-        }
+        Genre = await context.Genres.ToListAsync();
+    }
 }
