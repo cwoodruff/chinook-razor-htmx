@@ -6,7 +6,7 @@ using Htmx;
 
 namespace ChinookHTMX.Pages.Artists;
 
-public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class DeleteModel(Data.ChinookContext context) : PageModel
 {
     [BindProperty] public Artist Artist { get; set; } = default!;
 

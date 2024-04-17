@@ -4,7 +4,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.Playlists;
 
-public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class IndexModel(Data.ChinookContext context) : PageModel
 {
     public IList<Playlist> Playlist { get; set; } = default!;
 

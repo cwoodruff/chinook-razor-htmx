@@ -4,7 +4,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.Albums;
 
-public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class IndexModel(Data.ChinookContext context) : PageModel
 {
     public IList<Album> Album { get; set; } = default!;
 

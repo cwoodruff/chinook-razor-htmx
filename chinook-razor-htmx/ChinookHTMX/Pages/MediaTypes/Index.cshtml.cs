@@ -4,7 +4,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.MediaTypes;
 
-public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class IndexModel(Data.ChinookContext context) : PageModel
 {
     public IList<MediaType> MediaType { get; set; } = default!;
 

@@ -5,7 +5,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.MediaTypes;
 
-public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class DeleteModel(Data.ChinookContext context) : PageModel
 {
     [BindProperty] public MediaType MediaType { get; set; } = default!;
 

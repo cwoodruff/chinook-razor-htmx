@@ -5,7 +5,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.Customers;
 
-public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class DeleteModel(Data.ChinookContext context) : PageModel
 {
     [BindProperty] public Customer Customer { get; set; } = default!;
 

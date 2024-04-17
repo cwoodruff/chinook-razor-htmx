@@ -4,7 +4,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.Tracks;
 
-public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class IndexModel(Data.ChinookContext context) : PageModel
 {
     public IList<Track> Track { get; set; } = default!;
 

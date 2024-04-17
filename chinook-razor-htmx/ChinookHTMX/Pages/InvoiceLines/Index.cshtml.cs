@@ -4,7 +4,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.InvoiceLines;
 
-public class IndexModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class IndexModel(Data.ChinookContext context) : PageModel
 {
     public IList<InvoiceLine> InvoiceLine { get; set; } = default!;
 

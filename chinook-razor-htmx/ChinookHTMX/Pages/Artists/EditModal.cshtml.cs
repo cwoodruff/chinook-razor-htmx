@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChinookHTMX.Pages.Artists;
 
-public class EditModal(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class EditModal(Data.ChinookContext context) : PageModel
 {
     [BindProperty] public Artist? Artist { get; set; }
 

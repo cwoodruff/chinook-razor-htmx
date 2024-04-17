@@ -5,7 +5,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.Tracks;
 
-public class DeleteModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class DeleteModel(Data.ChinookContext context) : PageModel
 {
     [BindProperty] public Track Track { get; set; } = default!;
 

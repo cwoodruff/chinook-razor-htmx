@@ -5,7 +5,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.Employees;
 
-public class DetailsModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class DetailsModel(Data.ChinookContext context) : PageModel
 {
     public Employee Employee { get; set; } = default!;
 

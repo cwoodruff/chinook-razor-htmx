@@ -5,7 +5,7 @@ using Htmx;
 
 namespace ChinookHTMX.Pages.Artists;
 
-public class CreateModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class CreateModel(Data.ChinookContext context) : PageModel
 {
     [BindProperty] public Artist Artist { get; set; } = default!;
 

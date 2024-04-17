@@ -4,7 +4,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.Playlists;
 
-public class CreateModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class CreateModel(Data.ChinookContext context) : PageModel
 {
     public IActionResult OnGet()
     {

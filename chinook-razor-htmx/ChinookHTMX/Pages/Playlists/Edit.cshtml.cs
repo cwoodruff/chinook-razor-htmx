@@ -5,7 +5,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.Playlists;
 
-public class EditModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class EditModel(Data.ChinookContext context) : PageModel
 {
     [BindProperty] public Playlist Playlist { get; set; } = default!;
 

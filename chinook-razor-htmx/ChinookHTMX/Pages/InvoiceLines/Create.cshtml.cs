@@ -5,7 +5,7 @@ using ChinookHTMX.Entities;
 
 namespace ChinookHTMX.Pages.InvoiceLines;
 
-public class CreateModel(ChinookHTMX.Data.ChinookContext context) : PageModel
+public class CreateModel(Data.ChinookContext context) : PageModel
 {
     public IActionResult OnGet()
     {
