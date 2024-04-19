@@ -8,8 +8,6 @@ public class IndexModel(Data.ChinookContext context) : PageModel
 {
     public IList<Artist> Artists { get; set; } = default!;
 
-    public Artist Artist { get; set; } = default!;
-
     public async Task OnGetAsync()
     {
         Artists = await context.Artists.ToListAsync();
