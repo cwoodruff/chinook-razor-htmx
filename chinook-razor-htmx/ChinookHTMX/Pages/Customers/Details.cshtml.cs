@@ -2,12 +2,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Customers;
 
 public class DetailsModel(Data.ChinookContext context) : PageModel
 {
-    public Customer Customer { get; set; } = default!;
+    public Customer? Customer { get; set; } = default!;
 
     public async Task<IActionResult> OnGetAsync(int? id)
     {
@@ -16,14 +17,19 @@ public class DetailsModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var customer = await context.Customers.FirstOrDefaultAsync(m => m.Id == id);
-        if (customer == null)
+        Customer = await context.Customers
+            .Include(c => c.Invoices)
+            .Include(c => c.SupportRep)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Customer == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            Customer = customer;
+            return Partial("Customers/DetailsModal", this);
         }
 
         return Page();

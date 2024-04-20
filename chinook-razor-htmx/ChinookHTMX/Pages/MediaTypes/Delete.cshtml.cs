@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.MediaTypes;
 
@@ -16,20 +17,21 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var mediatype = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
+        MediaType = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
 
-        if (mediatype == null)
+        if (MediaType == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            MediaType = mediatype;
+            return Partial("MediaTypes/DeleteModal", this);
         }
 
         return Page();
     }
-
+    
     public async Task<IActionResult> OnPostAsync(int? id)
     {
         if (id == null)
@@ -37,14 +39,14 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var mediatype = await context.MediaTypes.FindAsync(id);
-        if (mediatype != null)
+        var mediaType = await context.MediaTypes.FindAsync(id);
+        if (mediaType != null)
         {
-            MediaType = mediatype;
+            MediaType = mediaType;
             context.MediaTypes.Remove(MediaType);
             await context.SaveChangesAsync();
         }
 
-        return RedirectToPage("./Index");
+        return Partial("_DeleteSuccess", this);
     }
 }

@@ -47,7 +47,7 @@ public class EditModel(Data.ChinookContext context) : PageModel
         }
         catch (DbUpdateConcurrencyException)
         {
-            if (!AlbumExists(Artist.Id))
+            if (!ArtistExists(Artist.Id))
             {
                 return NotFound();
             }
@@ -60,7 +60,7 @@ public class EditModel(Data.ChinookContext context) : PageModel
         return Partial("_EditSuccess", this);
     }
 
-    private bool AlbumExists(int id)
+    private bool ArtistExists(int id)
     {
         return context.Artists.Any(e => e.Id == id);
     }

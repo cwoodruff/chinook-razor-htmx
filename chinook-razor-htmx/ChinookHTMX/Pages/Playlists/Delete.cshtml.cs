@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Playlists;
 
@@ -16,20 +17,21 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var playlist = await context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
+        Playlist = await context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
 
-        if (playlist == null)
+        if (Playlist == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            Playlist = playlist;
+            return Partial("Playlists/DeleteModal", this);
         }
 
         return Page();
     }
-
+    
     public async Task<IActionResult> OnPostAsync(int? id)
     {
         if (id == null)
@@ -45,6 +47,6 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
             await context.SaveChangesAsync();
         }
 
-        return RedirectToPage("./Index");
+        return Partial("_DeleteSuccess", this);
     }
 }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Genres;
 
@@ -16,14 +17,16 @@ public class DetailsModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var genre = await context.Genres.FirstOrDefaultAsync(m => m.Id == id);
-        if (genre == null)
+        Genre = await context.Genres.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Genre == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            Genre = genre;
+            return Partial("Genres/DetailsModal", this);
         }
 
         return Page();

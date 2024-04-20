@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.MediaTypes;
 
@@ -9,34 +10,37 @@ public class EditModel(Data.ChinookContext context) : PageModel
 {
     [BindProperty] public MediaType MediaType { get; set; } = default!;
 
-    public async Task<IActionResult> OnGetAsync(int? id)
+    public async Task<IActionResult> OnGet(int? id)
     {
         if (id == null)
         {
             return NotFound();
         }
 
-        var mediatype = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
-        if (mediatype == null)
+        MediaType = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (MediaType == null)
         {
             return NotFound();
         }
 
-        MediaType = mediatype;
+        if (Request.IsHtmx())
+        {
+            return Partial("EditModal", this);
+        }
+
         return Page();
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see https://aka.ms/RazorPagesCRUD.
-    public async Task<IActionResult> OnPostAsync()
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
+    public async Task<IActionResult> OnPostModalAsync()
     {
         if (!ModelState.IsValid)
         {
-            return Page();
+            return Partial("MediaTypes/EditModal", this);
         }
 
         context.Attach(MediaType).State = EntityState.Modified;
-
         try
         {
             await context.SaveChangesAsync();
@@ -53,7 +57,7 @@ public class EditModel(Data.ChinookContext context) : PageModel
             }
         }
 
-        return RedirectToPage("./Index");
+        return Partial("_EditSuccess", this);
     }
 
     private bool MediaTypeExists(int id)

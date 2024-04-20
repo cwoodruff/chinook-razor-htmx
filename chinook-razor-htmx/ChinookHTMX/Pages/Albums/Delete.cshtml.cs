@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Albums;
 
@@ -16,20 +17,21 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var album = await context.Albums.FirstOrDefaultAsync(m => m.Id == id);
+        Album = await context.Albums.FirstOrDefaultAsync(m => m.Id == id);
 
-        if (album == null)
+        if (Album == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            Album = album;
+            return Partial("Artists/DeleteModal", this);
         }
 
         return Page();
     }
-
+    
     public async Task<IActionResult> OnPostAsync(int? id)
     {
         if (id == null)
@@ -45,6 +47,6 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
             await context.SaveChangesAsync();
         }
 
-        return RedirectToPage("./Index");
+        return Partial("_DeleteSuccess", this);
     }
 }

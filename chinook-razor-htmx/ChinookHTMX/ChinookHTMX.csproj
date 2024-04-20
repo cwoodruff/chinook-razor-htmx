@@ -1786,16 +1786,4 @@
         <PackageReference Include="Westwind.AspNetCore.Markdown" Version="3.16.0"/>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Pages\Albums\"/>
-        <Folder Include="Pages\Customers\"/>
-        <Folder Include="Pages\Employees\"/>
-        <Folder Include="Pages\Genres\"/>
-        <Folder Include="Pages\InvoiceLines\"/>
-        <Folder Include="Pages\Invoices\"/>
-        <Folder Include="Pages\MediaTypes\"/>
-        <Folder Include="Pages\Playlists\"/>
-        <Folder Include="Pages\Tracks\"/>
-    </ItemGroup>
-
 </Project>

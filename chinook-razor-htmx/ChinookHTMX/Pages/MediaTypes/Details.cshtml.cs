@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.MediaTypes;
 
@@ -16,14 +17,16 @@ public class DetailsModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var mediatype = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
-        if (mediatype == null)
+        MediaType = await context.MediaTypes.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (MediaType == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            MediaType = mediatype;
+            return Partial("MediaTypes/DetailsModal", this);
         }
 
         return Page();

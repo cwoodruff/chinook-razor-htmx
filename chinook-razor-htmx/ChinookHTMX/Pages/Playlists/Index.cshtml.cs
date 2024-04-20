@@ -10,6 +10,8 @@ public class IndexModel(Data.ChinookContext context) : PageModel
 
     public async Task OnGetAsync()
     {
-        Playlist = await context.Playlists.ToListAsync();
+        Playlist = await context.Playlists
+            .Include(p => p.Tracks)
+            .ToListAsync();
     }
 }

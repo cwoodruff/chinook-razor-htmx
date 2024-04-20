@@ -11,6 +11,8 @@ public class IndexModel(Data.ChinookContext context) : PageModel
     public async Task OnGetAsync()
     {
         Customer = await context.Customers
-            .Include(c => c.SupportRep).ToListAsync();
+            .Include(c => c.SupportRep)
+            .Include(c => c.Invoices)
+            .ToListAsync();
     }
 }

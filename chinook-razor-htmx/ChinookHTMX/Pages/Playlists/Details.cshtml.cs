@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Playlists;
 
@@ -16,14 +17,16 @@ public class DetailsModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var playlist = await context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
-        if (playlist == null)
+        Playlist = await context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Playlist == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            Playlist = playlist;
+            return Partial("Playlists/DetailsModal", this);
         }
 
         return Page();

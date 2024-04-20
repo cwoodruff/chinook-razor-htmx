@@ -7,7 +7,7 @@
                 <div class="card shadow mb-4">
                     <!-- Card Header -->
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Artist Details</h6>
+                        <h4 class="m-0 font-weight-bold text-primary">Artist Details</h4>
                         <button type="button"
                                 class="btn-close"
                                 data-bs-dismiss="modal"
@@ -23,6 +23,30 @@
                                 @Html.DisplayFor(model => model.Artist.Name)
                             </dd>
                         </dl>
+                        <dl class="row">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                            Album Title
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach (var item in Model.Artist.Albums)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Title)
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </dl>
+                        
                     </div>
                     <div class="modal-footer">
                     </div>

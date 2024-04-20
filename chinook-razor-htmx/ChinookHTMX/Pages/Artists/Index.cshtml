@@ -9,28 +9,22 @@
 <div id="content">
     <!-- Begin Page Content -->
     <div class="container-fluid">
-
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Artists</h1>
-        </div>
-
-        <p>
-            <button hx-get="@Url.PageLink("Create")"
-                    hx-target="#modal"
-                    hx-swap="innerHTML"
-                    class="btn btn-primary btn-icon-split">
-                <span class="icon text-white-50">
-                    <i class="fas fa-flag"></i>
-                </span>
-                <span class="text">Create New Artist</span>
-            </button>
-        </p>
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Artists</h6>
+                <h4 class="m-0 font-weight-bold text-primary">Artists</h4>
             </div>
             <div class="card-body">
+                <p>
+                    <button hx-get="@Url.PageLink("Create")"
+                            hx-target="#modal"
+                            hx-swap="innerHTML"
+                            class="btn btn-primary btn-icon-split">
+                        <span class="icon text-white-50">
+                            <i class="fas fa-flag"></i>
+                        </span>
+                        <span class="text">Create New Artist</span>
+                    </button>
+                </p>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped table-hover" id="dataTable">
                         <thead>

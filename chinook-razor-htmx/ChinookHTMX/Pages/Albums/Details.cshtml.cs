@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Albums;
 
@@ -16,14 +17,16 @@ public class DetailsModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var album = await context.Albums.FirstOrDefaultAsync(m => m.Id == id);
-        if (album == null)
+        Album = await context.Albums.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Album == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            Album = album;
+            return Partial("Artists/DetailsModal", this);
         }
 
         return Page();
