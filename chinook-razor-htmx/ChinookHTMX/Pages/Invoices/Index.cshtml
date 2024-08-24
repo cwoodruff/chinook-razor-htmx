@@ -30,34 +30,34 @@
                         <thead>
                         <tr>
                             <th>
-                                @Html.DisplayNameFor(model => model.Invoice[0].InvoiceDate)
+                                @Html.DisplayNameFor(model => model.Invoices[0].InvoiceDate)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Invoice[0].BillingAddress)
+                                @Html.DisplayNameFor(model => model.Invoices[0].BillingAddress)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Invoice[0].BillingCity)
+                                @Html.DisplayNameFor(model => model.Invoices[0].BillingCity)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Invoice[0].BillingState)
+                                @Html.DisplayNameFor(model => model.Invoices[0].BillingState)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Invoice[0].BillingCountry)
+                                @Html.DisplayNameFor(model => model.Invoices[0].BillingCountry)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Invoice[0].BillingPostalCode)
+                                @Html.DisplayNameFor(model => model.Invoices[0].BillingPostalCode)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Invoice[0].Total)
+                                @Html.DisplayNameFor(model => model.Invoices[0].Total)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Invoice[0].Customer)
+                                @Html.DisplayNameFor(model => model.Invoices[0].Customer)
                             </th>
                             <th></th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var item in Model.Invoice)
+                        @foreach (var item in Model.Invoices)
                         {
                             <tr>
                                 <td>
