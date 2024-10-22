@@ -398,3 +398,4 @@ FodyWeavers.xsd
 *.sln.iml
 /chinook-razor-htmx/.idea
 chinook-razor-htmx/.DS_Store
+.DS_Store
