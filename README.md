@@ -26,3 +26,5 @@ dotnet run
 ```
 
 Then navigate to `http://localhost:5288`
+
+Thanks to [khalidabuhakmeh](https://www.github.com/khalidabuhakmeh) for getting this to work with SQLite.
