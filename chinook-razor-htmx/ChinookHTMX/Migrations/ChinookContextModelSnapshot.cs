@@ -39,15 +39,6 @@ namespace ChinookHTMX.Migrations
                     b.HasIndex(new[] { "Id" }, "IPK_ProductItem");
 
                     b.ToTable("Album", (string)null);
-                    
-                    b.HasData(
-                        new ChinookHTMX.Entities.Album
-                        {
-                            Id = 1,
-                            Title = "XXXX",
-                            ArtistId = 1
-                        }
-                    );
                 });
 
             modelBuilder.Entity("ChinookHTMX.Entities.AlbumWithArtistName", b =>
@@ -70,14 +61,6 @@ namespace ChinookHTMX.Migrations
                     b.ToTable((string)null);
 
                     b.ToView("AlbumWithArtistName", (string)null);
-                    
-                    b.HasData(
-                        new ChinookHTMX.Entities.Artist()
-                        {
-                            Id = 1,
-                            Name = "XXXX"
-                        }
-                    );
                 });
 
             modelBuilder.Entity("ChinookHTMX.Entities.Artist", b =>

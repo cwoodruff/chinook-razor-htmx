@@ -15,11 +15,11 @@
       "destination": "wwwroot/lib/jquery/dist"
     },
     {
-      "library": "font-awesome@6.7.2",
+      "library": "font-awesome@6.5.2",
       "destination": "wwwroot/lib/font-awesome"
     },
     {
-      "library": "htmx@2.0.4",
+      "library": "htmx@1.9.12",
       "destination": "wwwroot/lib/htmx"
     },
     {
