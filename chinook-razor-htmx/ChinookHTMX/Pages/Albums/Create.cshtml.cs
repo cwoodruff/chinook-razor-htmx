@@ -25,11 +25,21 @@ public class CreateModel(Data.ChinookContext context) : PageModel
     {
         if (!ModelState.IsValid)
         {
-            return Partial("Albums/CreateModal", Album);
+            return Partial("_ValidationErrors", ModelState);
         }
+        
+        try
+        {
+            context.Albums.Add(Album);
+            await context.SaveChangesAsync();
 
-        context.Albums.Add(Album);
-        await context.SaveChangesAsync();
-        return Partial("_CreateSuccess", this);
+            // Return success message
+            return Partial("_SuccessMessage", $"Album '{Album.Title}' created successfully!");
+        }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error creating album: {ex.Message}");
+        }
     }
 }

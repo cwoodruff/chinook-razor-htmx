@@ -20,12 +20,21 @@ public class CreateModel(Data.ChinookContext context) : PageModel
     {
         if (!ModelState.IsValid)
         {
-            return Page();
+            return Partial("_ValidationErrors", ModelState);
         }
+        
+        try
+        {
+            context.Employees.Add(Employee);
+            await context.SaveChangesAsync();
 
-        context.Employees.Add(Employee);
-        await context.SaveChangesAsync();
-
-        return RedirectToPage("./Index");
+            // Return success message
+            return Partial("_SuccessMessage", $"Employee '{Employee.LastName}' created successfully!");
+        }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error creating employee: {ex.Message}");
+        }
     }
 }

@@ -2,33 +2,68 @@
 @model ChinookHTMX.Pages.Albums.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create Album";
 }
 
-<h1>Create</h1>
+<!-- Main Content -->
+<div id="content">
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+        <!-- Page Heading -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h4 class="m-0 font-weight-bold text-primary">Create New Album</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <form method="post"
+                              hx-post="@Url.Page("Create")"
+                              hx-target="#form-results"
+                              hx-swap="innerHTML"
+                              hx-indicator="#loading-indicator">
 
-<h4>Album</h4>
-<hr/>
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Album.Title" class="control-label"></label>
-                <input asp-for="Album.Title" class="form-control"/>
-                <span asp-validation-for="Album.Title" class="text-danger"></span>
+                            <div class="form-group mb-3">
+                                <label asp-for="Album.Title" class="form-label">Artist Name</label>
+                                <input asp-for="Album.Title"
+                                       class="form-control"
+                                       placeholder="Enter album title..."
+                                       autocomplete="off" />
+                                <span asp-validation-for="Album.Title" class="text-danger"></span>
+                            </div>
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary btn-icon-split">
+                                    <span class="icon text-white-50">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span class="text">Create Album</span>
+                                </button>
+                                <a asp-page="./Index" class="btn btn-secondary ms-2">
+                                    <i class="fas fa-arrow-left"></i> Back to List
+                                </a>
+                            </div>
+                        </form>
+
+                        <!-- Loading Indicator -->
+                        <div id="loading-indicator" class="htmx-indicator mt-3">
+                            <div class="text-center">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Creating...</span>
+                                </div>
+                                <div class="mt-2 text-muted">Creating artist...</div>
+                            </div>
+                        </div>
+
+                        <!-- Form Results -->
+                        <div id="form-results" class="mt-3"></div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Album.ArtistId" class="control-label"></label>
-                <select asp-for="Album.ArtistId" class="form-control" asp-items="ViewBag.ArtistId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary"/>
-            </div>
-        </form>
+        </div>
     </div>
+    <!-- /.container-fluid -->
 </div>
-
-<div>
-    <a asp-page="Index">Back to List</a>
-</div>
+<!-- End of Main Content -->

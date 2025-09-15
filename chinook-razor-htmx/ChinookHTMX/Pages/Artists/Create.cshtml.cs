@@ -24,11 +24,22 @@ public class CreateModel(Data.ChinookContext context) : PageModel
     {
         if (!ModelState.IsValid)
         {
-            return Partial("Artists/CreateModal", Artist);
+            // Return validation errors as partial view
+            return Partial("_ValidationErrors", ModelState);
         }
 
-        context.Artists.Add(Artist);
-        await context.SaveChangesAsync();
-        return Partial("_CreateSuccess", this);
+        try
+        {
+            context.Artists.Add(Artist);
+            await context.SaveChangesAsync();
+
+            // Return success message
+            return Partial("_SuccessMessage", $"Artist '{Artist.Name}' created successfully!");
+        }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error creating artist: {ex.Message}");
+        }
     }
 }

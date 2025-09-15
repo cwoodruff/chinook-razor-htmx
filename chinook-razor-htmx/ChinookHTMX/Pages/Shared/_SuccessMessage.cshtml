@@ -1,0 +1,23 @@
+@model string
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fas fa-check-circle me-2"></i>
+    <strong>Success!</strong> @Model
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<script>
+    // Trigger table refresh if on index page
+    if (typeof htmx !== 'undefined') {
+        htmx.trigger('body', 'refreshTable');
+    }
+
+    // Auto-dismiss after 3 seconds
+    setTimeout(function() {
+        const alert = document.querySelector('.alert-success');
+        if (alert) {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+        }
+    }, 3000);
+</script>

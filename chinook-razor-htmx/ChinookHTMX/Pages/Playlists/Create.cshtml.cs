@@ -24,11 +24,21 @@ public class CreateModel(Data.ChinookContext context) : PageModel
     {
         if (!ModelState.IsValid)
         {
-            return Partial("Playlists/CreateModal", Playlist);
+            return Partial("_ValidationErrors", ModelState);
         }
-
-        context.Playlists.Add(Playlist);
-        await context.SaveChangesAsync();
-        return Partial("_CreateSuccess", this);
+        try
+                {
+                    context.Playlists.Add(Playlist);
+                    await context.SaveChangesAsync();
+        
+                    // Return success message
+                    return Partial("_SuccessMessage", $"Playlist '{Playlist.Name}' created successfully!");
+                }
+                catch (Exception ex)
+                {
+                    // Return error message
+                    return Partial("_ErrorMessage", $"Error creating playlist: {ex.Message}");
+                }
+        
     }
 }

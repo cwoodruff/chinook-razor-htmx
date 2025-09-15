@@ -22,12 +22,21 @@ public class CreateModel(Data.ChinookContext context) : PageModel
     {
         if (!ModelState.IsValid)
         {
-            return Page();
+            return Partial("_ValidationErrors", ModelState);
         }
+        
+        try
+        {
+            context.Tracks.Add(Track);
+            await context.SaveChangesAsync();
 
-        context.Tracks.Add(Track);
-        await context.SaveChangesAsync();
-
-        return RedirectToPage("./Index");
+            // Return success message
+            return Partial("_SuccessMessage", $"Track '{Track.Name}' created successfully!");
+        }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error creating track: {ex.Message}");
+        }
     }
 }

@@ -25,11 +25,21 @@ public class CreateModel(Data.ChinookContext context) : PageModel
     {
         if (!ModelState.IsValid)
         {
-            return Partial("Customers/CreateModal", Customer);
+            return Partial("_ValidationErrors", ModelState);
         }
 
-        context.Customers.Add(Customer);
-        await context.SaveChangesAsync();
-        return Partial("_CreateSuccess", this);
+        try
+        {
+            context.Customers.Add(Customer);
+            await context.SaveChangesAsync();
+
+            // Return success message
+            return Partial("_SuccessMessage", $"Customer '{Customer.LastName}' created successfully!");
+        }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error creating customer: {ex.Message}");
+        }
     }
 }

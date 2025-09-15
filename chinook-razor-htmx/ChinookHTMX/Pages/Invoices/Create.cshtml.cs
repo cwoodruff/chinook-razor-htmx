@@ -20,12 +20,21 @@ public class CreateModel(Data.ChinookContext context) : PageModel
     {
         if (!ModelState.IsValid)
         {
-            return Page();
+            return Partial("_ValidationErrors", ModelState);
         }
+        
+        try
+        {
+            context.Invoices.Add(Invoice);
+            await context.SaveChangesAsync();
 
-        context.Invoices.Add(Invoice);
-        await context.SaveChangesAsync();
-
-        return RedirectToPage("./Index");
+            // Return success message
+            return Partial("_SuccessMessage", $"Invoice '{Invoice.Id}' created successfully!");
+        }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error creating invoice: {ex.Message}");
+        }
     }
 }

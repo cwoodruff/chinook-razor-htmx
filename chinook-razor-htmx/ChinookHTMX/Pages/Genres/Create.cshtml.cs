@@ -24,11 +24,21 @@ public class CreateModel(Data.ChinookContext context) : PageModel
     {
         if (!ModelState.IsValid)
         {
-            return Partial("Genres/CreateModal", Genre);
+            return Partial("_ValidationErrors", ModelState);
         }
+        
+        try
+        {
+            context.Genres.Add(Genre);
+            await context.SaveChangesAsync();
 
-        context.Genres.Add(Genre);
-        await context.SaveChangesAsync();
-        return Partial("_CreateSuccess", this);
+            // Return success message
+            return Partial("_SuccessMessage", $"Genre '{Genre.Name}' created successfully!");
+        }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error creating genre: {ex.Message}");
+        }
     }
 }

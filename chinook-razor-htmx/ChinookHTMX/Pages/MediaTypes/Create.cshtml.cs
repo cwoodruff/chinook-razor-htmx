@@ -24,11 +24,21 @@ public class CreateModel(Data.ChinookContext context) : PageModel
     {
         if (!ModelState.IsValid)
         {
-            return Partial("MediaTypes/CreateModal", MediaType);
+            return Partial("_ValidationErrors", ModelState);
         }
+        
+        try
+        {
+            context.MediaTypes.Add(MediaType);
+            await context.SaveChangesAsync();
 
-        context.MediaTypes.Add(MediaType);
-        await context.SaveChangesAsync();
-        return Partial("_CreateSuccess", this);
+            // Return success message
+            return Partial("_SuccessMessage", $"Media Type '{MediaType.Name}' created successfully!");
+        }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error creating media type: {ex.Message}");
+        }
     }
 }

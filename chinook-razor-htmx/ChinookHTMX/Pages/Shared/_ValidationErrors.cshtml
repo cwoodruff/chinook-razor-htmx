@@ -1,0 +1,12 @@
+@model Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Please correct the following errors:</strong>
+    <ul class="mb-0 mt-2">
+        @foreach (var error in Model.Values.SelectMany(v => v.Errors))
+        {
+            <li>@error.ErrorMessage</li>
+        }
+    </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
