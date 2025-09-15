@@ -33,31 +33,45 @@ public class EditModel(Data.ChinookContext context) : PageModel
     }
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-    public async Task<IActionResult> OnPostModalAsync()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
-            return Partial("Playlists/EditModal", this);
+            // Return validation errors as partial view
+            return Partial("_ValidationErrors", ModelState);
         }
 
         context.Attach(Playlist).State = EntityState.Modified;
+
         try
         {
             await context.SaveChangesAsync();
+
+            // Return success message
+            return Partial("_SuccessMessage", $"Playlist '{Playlist.Name}' updated successfully!");
         }
         catch (DbUpdateConcurrencyException)
         {
             if (!PlaylistExists(Playlist.Id))
             {
-                return NotFound();
+                return Partial("_ErrorMessage", "Playlist not found. It may have been deleted by another user.");
             }
             else
             {
-                throw;
+                return Partial("_ErrorMessage", "A concurrency error occurred. Please refresh and try again.");
             }
         }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error updating playlist: {ex.Message}");
+        }
+    }
 
-        return Partial("_EditSuccess", this);
+    // Keep the modal method for backward compatibility
+    public async Task<IActionResult> OnPostModalAsync()
+    {
+        return await OnPostAsync();
     }
 
     private bool PlaylistExists(int id)

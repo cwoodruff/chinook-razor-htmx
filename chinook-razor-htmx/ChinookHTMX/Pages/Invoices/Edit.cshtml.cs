@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Invoices;
 
@@ -10,31 +11,36 @@ public class EditModel(Data.ChinookContext context) : PageModel
 {
     [BindProperty] public Invoice Invoice { get; set; } = default!;
 
-    public async Task<IActionResult> OnGetAsync(int? id)
+    public async Task<IActionResult> OnGet(int? id)
     {
         if (id == null)
         {
             return NotFound();
         }
 
-        var invoice = await context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
-        if (invoice == null)
+        Invoice = await context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
+        ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "LastName");
+
+        if (Invoice == null)
         {
             return NotFound();
         }
 
-        Invoice = invoice;
-        ViewData["CustomerId"] = new SelectList(context.Customers, "Id", "Id");
+        if (Request.IsHtmx())
+        {
+            return Partial("EditModal", this);
+        }
+
         return Page();
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see https://aka.ms/RazorPagesCRUD.
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
-            return Page();
+            // Return validation errors as partial view
+            return Partial("_ValidationErrors", ModelState);
         }
 
         context.Attach(Invoice).State = EntityState.Modified;
@@ -42,20 +48,32 @@ public class EditModel(Data.ChinookContext context) : PageModel
         try
         {
             await context.SaveChangesAsync();
+
+            // Return success message
+            return Partial("_SuccessMessage", $"Invoice '{Invoice.Id}' updated successfully!");
         }
         catch (DbUpdateConcurrencyException)
         {
             if (!InvoiceExists(Invoice.Id))
             {
-                return NotFound();
+                return Partial("_ErrorMessage", "Invoice not found. It may have been deleted by another user.");
             }
             else
             {
-                throw;
+                return Partial("_ErrorMessage", "A concurrency error occurred. Please refresh and try again.");
             }
         }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error updating invoice: {ex.Message}");
+        }
+    }
 
-        return RedirectToPage("./Index");
+    // Keep the modal method for backward compatibility
+    public async Task<IActionResult> OnPostModalAsync()
+    {
+        return await OnPostAsync();
     }
 
     private bool InvoiceExists(int id)

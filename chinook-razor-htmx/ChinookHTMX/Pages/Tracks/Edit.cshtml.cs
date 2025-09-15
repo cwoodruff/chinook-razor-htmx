@@ -3,40 +3,50 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Tracks;
 
 public class EditModel(Data.ChinookContext context) : PageModel
 {
     [BindProperty] public Track Track { get; set; } = default!;
+    
+        
 
-    public async Task<IActionResult> OnGetAsync(int? id)
+
+    public async Task<IActionResult> OnGet(int? id)
     {
         if (id == null)
         {
             return NotFound();
         }
 
-        var track = await context.Tracks.FirstOrDefaultAsync(m => m.Id == id);
-        if (track == null)
+        Track = await context.Tracks.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Track == null)
         {
             return NotFound();
         }
-
-        Track = track;
+        
         ViewData["AlbumId"] = new SelectList(context.Albums, "Id", "Id");
         ViewData["GenreId"] = new SelectList(context.Genres, "Id", "Id");
         ViewData["MediaTypeId"] = new SelectList(context.MediaTypes, "Id", "Id");
+
+        if (Request.IsHtmx())
+        {
+            return Partial("EditModal", this);
+        }
+
         return Page();
     }
 
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see https://aka.ms/RazorPagesCRUD.
+    // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
     public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
-            return Page();
+            // Return validation errors as partial view
+            return Partial("_ValidationErrors", ModelState);
         }
 
         context.Attach(Track).State = EntityState.Modified;
@@ -44,20 +54,32 @@ public class EditModel(Data.ChinookContext context) : PageModel
         try
         {
             await context.SaveChangesAsync();
+
+            // Return success message
+            return Partial("_SuccessMessage", $"Track '{Track.Name}' updated successfully!");
         }
         catch (DbUpdateConcurrencyException)
         {
             if (!TrackExists(Track.Id))
             {
-                return NotFound();
+                return Partial("_ErrorMessage", "Track not found. It may have been deleted by another user.");
             }
             else
             {
-                throw;
+                return Partial("_ErrorMessage", "A concurrency error occurred. Please refresh and try again.");
             }
         }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error updating track: {ex.Message}");
+        }
+    }
 
-        return RedirectToPage("./Index");
+    // Keep the modal method for backward compatibility
+    public async Task<IActionResult> OnPostModalAsync()
+    {
+        return await OnPostAsync();
     }
 
     private bool TrackExists(int id)

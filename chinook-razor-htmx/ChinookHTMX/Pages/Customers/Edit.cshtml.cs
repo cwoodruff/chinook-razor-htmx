@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
 using Htmx;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ChinookHTMX.Pages.Customers;
 
@@ -19,6 +19,8 @@ public class EditModel(Data.ChinookContext context) : PageModel
         }
 
         Customer = await context.Customers.FirstOrDefaultAsync(m => m.Id == id);
+        
+        ViewData["SupportRepId"] = new SelectList(context.Employees, "Id", "Id");
 
         if (Customer == null)
         {
@@ -34,31 +36,45 @@ public class EditModel(Data.ChinookContext context) : PageModel
     }
 
     // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-    public async Task<IActionResult> OnPostModalAsync()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
         {
-            return Partial("Customers/EditModal", this);
+            // Return validation errors as partial view
+            return Partial("_ValidationErrors", ModelState);
         }
 
         context.Attach(Customer).State = EntityState.Modified;
+
         try
         {
             await context.SaveChangesAsync();
+
+            // Return success message
+            return Partial("_SuccessMessage", $"Customer '{Customer.LastName}' updated successfully!");
         }
         catch (DbUpdateConcurrencyException)
         {
             if (!CustomerExists(Customer.Id))
             {
-                return NotFound();
+                return Partial("_ErrorMessage", "Customer not found. It may have been deleted by another user.");
             }
             else
             {
-                throw;
+                return Partial("_ErrorMessage", "A concurrency error occurred. Please refresh and try again.");
             }
         }
+        catch (Exception ex)
+        {
+            // Return error message
+            return Partial("_ErrorMessage", $"Error updating customer: {ex.Message}");
+        }
+    }
 
-        return Partial("_EditSuccess", this);
+    // Keep the modal method for backward compatibility
+    public async Task<IActionResult> OnPostModalAsync()
+    {
+        return await OnPostAsync();
     }
 
     private bool CustomerExists(int id)
