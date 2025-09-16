@@ -85,33 +85,29 @@
                                     @Html.DisplayFor(modelItem => item.MediaType.Id)
                                 </td>
                                 <td>
-                                    <button hx-get="@Url.PageLink("Edit", values: new { item.Id })"
-                                            hx-target="#modal"
-                                            hx-swap="innerHTML"
-                                            class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">Edit</span>
-                                    </button>
-                                    <button hx-get="@Url.PageLink("Details", values: new { item.Id })"
-                                            hx-target="#modal"
-                                            hx-swap="innerHTML"
-                                            class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">Details</span>
-                                    </button>
-                                    <button hx-get="@Url.PageLink("Delete", values: new { item.Id })"
-                                            hx-target="#modal"
-                                            hx-swap="innerHTML"
-                                            class="btn btn-primary btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-flag"></i>
-                                        </span>
-                                        <span class="text">Delete</span>
-                                    </button>
+                                    <div class="btn-group" role="group">
+                                        <button hx-get="@Url.PageLink("Edit", values: new { item.Id })"
+                                                hx-target="#modal"
+                                                hx-swap="innerHTML"
+                                                class="btn btn-sm btn-outline-primary"
+                                                title="Edit Track">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button hx-get="@Url.PageLink("Details", values: new { item.Id })"
+                                                hx-target="#modal"
+                                                hx-swap="innerHTML"
+                                                class="btn btn-sm btn-outline-info"
+                                                title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button hx-get="@Url.PageLink("Delete", values: new { item.Id })"
+                                                hx-target="#modal"
+                                                hx-swap="innerHTML"
+                                                class="btn btn-sm btn-outline-danger"
+                                                title="Delete Track">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         }
