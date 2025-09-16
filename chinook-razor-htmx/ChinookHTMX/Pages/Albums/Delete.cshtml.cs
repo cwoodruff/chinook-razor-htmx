@@ -17,16 +17,19 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        Album = await context.Albums.FirstOrDefaultAsync(m => m.Id == id);
+        Album = await context.Albums
+            .Include(a => a.Artist) // Include related data for relationship checks
+            .FirstOrDefaultAsync(m => m.Id == id);
 
         if (Album == null)
         {
             return NotFound();
         }
 
+        // Return modal for HTMX requests
         if (Request.IsHtmx())
         {
-            return Partial("Artists/DeleteModal", this);
+            return Partial("DeleteModal", this);
         }
 
         return Page();
@@ -36,17 +39,29 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
     {
         if (id == null)
         {
-            return NotFound();
+            return Partial("_DeleteError", "Invalid album ID.");
         }
 
-        var album = await context.Albums.FindAsync(id);
-        if (album != null)
+        Album = await context.Albums
+            .Include(a => a.ArtistId == Album.ArtistId) // Include related data for relationship checks
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Album == null)
         {
-            Album = album;
+            return Partial("_DeleteError", "Album not found. It may have been already deleted.");
+        }
+
+        try
+        {
+            var albumTitle = Album.Title;
             context.Albums.Remove(Album);
             await context.SaveChangesAsync();
-        }
 
-        return Partial("_DeleteSuccess", this);
+            return Partial("_DeleteSuccess", $"Album '{albumTitle}' has been successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return Partial("_DeleteError", $"Error deleting album: {ex.Message}");
+        }
     }
 }

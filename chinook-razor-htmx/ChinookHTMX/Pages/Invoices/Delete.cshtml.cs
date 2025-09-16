@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Invoices;
 
@@ -16,35 +17,58 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var invoice = await context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
+        Invoice = await context.Invoices
+            .Include(i => i.InvoiceLines) // Include related data for relationship checks
+            .FirstOrDefaultAsync(m => m.Id == id);
 
-        if (invoice == null)
+        if (Invoice == null)
         {
             return NotFound();
         }
-        else
+
+        // Return modal for HTMX requests
+        if (Request.IsHtmx())
         {
-            Invoice = invoice;
+            return Partial("DeleteModal", this);
         }
 
         return Page();
     }
-
+    
     public async Task<IActionResult> OnPostAsync(int? id)
     {
         if (id == null)
         {
-            return NotFound();
+            return Partial("_DeleteError", "Invalid invoice ID.");
         }
 
-        var invoice = await context.Invoices.FindAsync(id);
-        if (invoice != null)
+        Invoice = await context.Invoices
+            .Include(i => i.InvoiceLines)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Invoice == null)
         {
-            Invoice = invoice;
+            return Partial("_DeleteError", "Invoice not found. It may have been already deleted.");
+        }
+
+        try
+        {
+            // Check for related records
+            if (Invoice.InvoiceLines.Any())
+            {
+                return Partial("_DeleteError",
+                    $"Cannot delete invoice '{Invoice.Id}' because it has {Invoice.InvoiceLines.Count} associated invoice lines(s). Please delete the invoice lines first.");
+            }
+
+            var invoiceName = Invoice.Id;
             context.Invoices.Remove(Invoice);
             await context.SaveChangesAsync();
-        }
 
-        return RedirectToPage("./Index");
+            return Partial("_DeleteSuccess", $"Invoice '{invoiceName}' has been successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return Partial("_DeleteError", $"Error deleting invoice: {ex.Message}");
+        }
     }
 }

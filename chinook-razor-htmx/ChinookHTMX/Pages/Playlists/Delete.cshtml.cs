@@ -17,16 +17,19 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        Playlist = await context.Playlists.FirstOrDefaultAsync(m => m.Id == id);
+        Playlist = await context.Playlists
+            .Include(a => a.Tracks) // Include related data for relationship checks
+            .FirstOrDefaultAsync(m => m.Id == id);
 
         if (Playlist == null)
         {
             return NotFound();
         }
 
+        // Return modal for HTMX requests
         if (Request.IsHtmx())
         {
-            return Partial("Playlists/DeleteModal", this);
+            return Partial("DeleteModal", this);
         }
 
         return Page();
@@ -36,17 +39,36 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
     {
         if (id == null)
         {
-            return NotFound();
+            return Partial("_DeleteError", "Invalid artist ID.");
         }
 
-        var playlist = await context.Playlists.FindAsync(id);
-        if (playlist != null)
+        Playlist = await context.Playlists
+            .Include(a => a.Tracks)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Playlist == null)
         {
-            Playlist = playlist;
+            return Partial("_DeleteError", "Playlist not found. It may have been already deleted.");
+        }
+
+        try
+        {
+            // Check for related records
+            if (Playlist.Tracks.Any())
+            {
+                return Partial("_DeleteError",
+                    $"Cannot delete playlist '{Playlist.Name}' because it has {Playlist.Tracks.Count} associated tracks(s). Please remove the tracks first.");
+            }
+
+            var playlistName = Playlist.Name;
             context.Playlists.Remove(Playlist);
             await context.SaveChangesAsync();
-        }
 
-        return Partial("_DeleteSuccess", this);
+            return Partial("_DeleteSuccess", $"Playlist '{playlistName}' has been successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return Partial("_DeleteError", $"Error deleting playlist: {ex.Message}");
+        }
     }
 }

@@ -4,7 +4,7 @@ public partial class InvoiceLine
 {
     public int Id { get; set; }
 
-    public int InvoiceId { get; set; }
+    public int? InvoiceId { get; set; }
 
     public int TrackId { get; set; }
 

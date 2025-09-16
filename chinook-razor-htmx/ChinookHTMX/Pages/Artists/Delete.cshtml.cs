@@ -17,16 +17,19 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        Artist = await context.Artists.FirstOrDefaultAsync(m => m.Id == id);
+        Artist = await context.Artists
+            .Include(a => a.Albums) // Include related data for relationship checks
+            .FirstOrDefaultAsync(m => m.Id == id);
 
         if (Artist == null)
         {
             return NotFound();
         }
 
+        // Return modal for HTMX requests
         if (Request.IsHtmx())
         {
-            return Partial("Artists/DeleteModal", this);
+            return Partial("DeleteModal", this);
         }
 
         return Page();
@@ -36,17 +39,36 @@ public class DeleteModel(Data.ChinookContext context) : PageModel
     {
         if (id == null)
         {
-            return NotFound();
+            return Partial("_DeleteError", "Invalid artist ID.");
         }
 
-        var artist = await context.Artists.FindAsync(id);
-        if (artist != null)
+        Artist = await context.Artists
+            .Include(a => a.Albums)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Artist == null)
         {
-            Artist = artist;
+            return Partial("_DeleteError", "Artist not found. It may have been already deleted.");
+        }
+
+        try
+        {
+            // Check for related records
+            if (Artist.Albums.Any())
+            {
+                return Partial("_DeleteError",
+                    $"Cannot delete artist '{Artist.Name}' because it has {Artist.Albums.Count} associated album(s). Please delete the albums first.");
+            }
+
+            var artistName = Artist.Name;
             context.Artists.Remove(Artist);
             await context.SaveChangesAsync();
-        }
 
-        return Partial("_DeleteSuccess", this);
+            return Partial("_DeleteSuccess", $"Artist '{artistName}' has been successfully deleted.");
+        }
+        catch (Exception ex)
+        {
+            return Partial("_DeleteError", $"Error deleting artist: {ex.Message}");
+        }
     }
 }

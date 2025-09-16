@@ -1,1 +1,23 @@
-<strong>The deletion of the "@Model" was Successful</strong>
+@model string
+
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fas fa-check-circle me-2"></i>
+    <strong>Successfully Deleted!</strong><br>
+    @Model
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<script>
+    // Auto-close modal and refresh table
+    setTimeout(function() {
+        const modal = document.querySelector('.modal.show');
+        if (modal) {
+            const modalInstance = bootstrap.Modal.getInstance(modal);
+            if (modalInstance) modalInstance.hide();
+        }
+        // Trigger table refresh
+        if (typeof htmx !== 'undefined') {
+            htmx.trigger('body', 'refreshTable');
+        }
+    }, 1500);
+</script>

@@ -8,7 +8,7 @@ public partial class Track
 
     public int? AlbumId { get; set; }
 
-    public int MediaTypeId { get; set; }
+    public int? MediaTypeId { get; set; }
 
     public int? GenreId { get; set; }
 
@@ -26,7 +26,7 @@ public partial class Track
 
     public virtual ICollection<InvoiceLine> InvoiceLines { get; set; } = new List<InvoiceLine>();
 
-    public virtual MediaType MediaType { get; set; } = null!;
+    public virtual MediaType? MediaType { get; set; } = null!;
 
     public virtual ICollection<Playlist> Playlists { get; set; } = new List<Playlist>();
 }
