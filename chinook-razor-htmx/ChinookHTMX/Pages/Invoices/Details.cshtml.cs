@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Invoices;
 
@@ -16,14 +17,19 @@ public class DetailsModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var invoice = await context.Invoices.FirstOrDefaultAsync(m => m.Id == id);
-        if (invoice == null)
+        Invoice = await context.Invoices
+            .Include(i => i.InvoiceLines)
+            .Include(i => i.Customer)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Invoice == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            Invoice = invoice;
+            return Partial("DetailsModal", this);
         }
 
         return Page();

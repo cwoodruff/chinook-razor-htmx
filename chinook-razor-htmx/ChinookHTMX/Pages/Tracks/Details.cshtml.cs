@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.Tracks;
 
@@ -16,14 +17,21 @@ public class DetailsModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var track = await context.Tracks.FirstOrDefaultAsync(m => m.Id == id);
-        if (track == null)
+        Track = await context.Tracks
+            .Include(t => t.Album)
+            .Include(t => t.MediaType)
+            .Include(t => t.Genre)
+            .Include(t => t.InvoiceLines)
+            .FirstOrDefaultAsync(m => m.Id == id);
+
+        if (Track == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            Track = track;
+            return Partial("DetailsModal", this);
         }
 
         return Page();

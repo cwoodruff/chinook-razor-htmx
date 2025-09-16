@@ -26,7 +26,7 @@ public class DetailsModel(Data.ChinookContext context) : PageModel
 
         if (Request.IsHtmx())
         {
-            return Partial("Playlists/DetailsModal", this);
+            return Partial("DetailsModal", this);
         }
 
         return Page();

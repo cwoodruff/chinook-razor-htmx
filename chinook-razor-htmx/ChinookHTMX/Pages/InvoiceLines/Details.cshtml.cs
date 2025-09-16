@@ -2,13 +2,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ChinookHTMX.Entities;
+using Htmx;
 
 namespace ChinookHTMX.Pages.InvoiceLines;
 
 public class DetailsModel(Data.ChinookContext context) : PageModel
 {
     public InvoiceLine InvoiceLine { get; set; } = default!;
-
+    
     public async Task<IActionResult> OnGetAsync(int? id)
     {
         if (id == null)
@@ -16,14 +17,16 @@ public class DetailsModel(Data.ChinookContext context) : PageModel
             return NotFound();
         }
 
-        var invoiceline = await context.InvoiceLines.FirstOrDefaultAsync(m => m.Id == id);
-        if (invoiceline == null)
+        InvoiceLine = await context.InvoiceLines.FirstOrDefaultAsync(m => m.Id == id);
+
+        if (InvoiceLine == null)
         {
             return NotFound();
         }
-        else
+
+        if (Request.IsHtmx())
         {
-            InvoiceLine = invoiceline;
+            return Partial("DetailsModal", this);
         }
 
         return Page();

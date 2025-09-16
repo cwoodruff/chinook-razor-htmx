@@ -29,7 +29,7 @@ public class DetailsModel(Data.ChinookContext context) : PageModel
 
         if (Request.IsHtmx())
         {
-            return Partial("Customers/DetailsModal", this);
+            return Partial("DetailsModal", this);
         }
 
         return Page();
