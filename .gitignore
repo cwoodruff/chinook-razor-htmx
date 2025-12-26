@@ -396,11 +396,39 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-/chinook-razor-htmx/.idea
-chinook-razor-htmx/.DS_Store
-.DS_Store
-/chinook-razor-htmx/.idea
+
+**/.DS_Store
 /.vscode
-/chinook-razor-htmx/.idea
 chinook-razor-htmx/identifier.sqlite
 chinook-razor-htmx/CLAUDE.md
+
+# Ignore all of .idea folder by default
+.idea/*
+
+# Allow some project-specific settings
+!.idea/codeStyles/
+!.idea/deployment.xml
+!.idea/modules.xml
+!.idea/vcs.xml
+!.idea/workspace.xml
+
+# Ignore user-specific or OS-specific settings
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/libraries
+.idea/assetWizardSettings.xml
+.idea/jsLibraryMappings.xml
+.idea/shelf
+
+# Ignore IDE caches
+.idea/dataSources/
+.idea/dataSources.ids
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+.idea/httpRequests
+.idea/inspectionProfiles
+.idea/runConfigurations/
+
