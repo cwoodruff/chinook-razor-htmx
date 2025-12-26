@@ -1,0 +1,92 @@
+@model ChinookHTMX.Pages.Albums.IndexModel
+
+<div class="table-responsive">
+    <table class="table table-bordered table-striped table-hover" id="dataTable">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Album[0].Title)
+                </th>
+                <th>
+                    Artist
+                </th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Album.Any())
+            {
+                @foreach (var item in Model.Album)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @(item.Artist?.Name ?? "Unknown Artist")
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button hx-get="@Url.PageLink("Edit", values: new { item.Id })"
+                                        hx-target="#modal"
+                                        hx-swap="innerHTML"
+                                        class="btn btn-sm btn-outline-primary"
+                                        title="Edit Album">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button hx-get="@Url.PageLink("Details", values: new { item.Id })"
+                                        hx-target="#modal"
+                                        hx-swap="innerHTML"
+                                        class="btn btn-sm btn-outline-info"
+                                        title="View Details">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button hx-get="@Url.PageLink("Delete", values: new { item.Id })"
+                                        hx-target="#modal"
+                                        hx-swap="innerHTML"
+                                        class="btn btn-sm btn-outline-danger"
+                                        title="Delete Album">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center text-muted">
+                        @if (!string.IsNullOrWhiteSpace(Model.SearchTerm))
+                        {
+                            <i class="fas fa-search mb-2"></i>
+                            <p>No albums found matching "@Model.SearchTerm"</p>
+                            <small>Try adjusting your search terms or browse all albums.</small>
+                        }
+                        else
+                        {
+                            <i class="fas fa-music mb-2"></i>
+                            <p>No albums found</p>
+                            <small>Get started by adding your first album.</small>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.Album.Any())
+{
+    <div class="row mt-3">
+        <div class="col-sm-12 col-md-6">
+            <div class="text-muted small">
+                Showing @Model.Album.Count album@(Model.Album.Count != 1 ? "s" : "")
+                @if (!string.IsNullOrWhiteSpace(Model.SearchTerm))
+                {
+                    @: matching "@Model.SearchTerm"
+                }
+            </div>
+        </div>
+    </div>
+}

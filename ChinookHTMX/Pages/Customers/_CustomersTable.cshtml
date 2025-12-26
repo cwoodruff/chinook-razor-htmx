@@ -1,0 +1,130 @@
+@model ChinookHTMX.Pages.Customers.IndexModel
+
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable">
+        <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].PostalCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].Fax)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer[0].SupportRep)
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Customer)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PostalCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupportRep.Id)
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <button hx-get="@Url.PageLink("Edit", values: new { item.Id })"
+                                hx-target="#modal"
+                                hx-swap="innerHTML"
+                                class="btn btn-sm btn-outline-primary"
+                                title="Edit Customer">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button hx-get="@Url.PageLink("Details", values: new { item.Id })"
+                                hx-target="#modal"
+                                hx-swap="innerHTML"
+                                class="btn btn-sm btn-outline-info"
+                                title="View Details">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button hx-get="@Url.PageLink("Delete", values: new { item.Id })"
+                                hx-target="#modal"
+                                hx-swap="innerHTML"
+                                class="btn btn-sm btn-outline-danger"
+                                title="Delete Customer">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+@if (Model.Customer.Any())
+{
+    <div class="row mt-3">
+        <div class="col-sm-12 col-md-6">
+            <div class="text-muted small">
+                Showing @Model.Customer.Count album@(Model.Customer.Count != 1 ? "s" : "")
+                @if (!string.IsNullOrWhiteSpace(Model.SearchTerm))
+                {
+                    @: matching "@Model.SearchTerm"
+                }
+            </div>
+        </div>
+    </div>
+}

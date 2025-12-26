@@ -1,0 +1,8 @@
+@page
+@model ChinookHTMX.Pages.Artists.IndexModel
+
+@{
+    ViewData["Title"] = "Artists";
+}
+
+@await Html.PartialAsync("_ArtistsContent", Model)

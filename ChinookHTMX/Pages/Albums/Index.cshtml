@@ -1,0 +1,8 @@
+@page
+@model ChinookHTMX.Pages.Albums.IndexModel
+
+@{
+    ViewData["Title"] = "Albums";
+}
+
+@await Html.PartialAsync("_AlbumsContent", Model)

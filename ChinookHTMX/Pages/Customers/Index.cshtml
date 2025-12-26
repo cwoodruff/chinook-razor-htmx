@@ -1,0 +1,8 @@
+@page
+@model ChinookHTMX.Pages.Customers.IndexModel
+
+@{
+    ViewData["Title"] = "Customers";
+}
+
+@await Html.PartialAsync("_CustomersContent", Model)
